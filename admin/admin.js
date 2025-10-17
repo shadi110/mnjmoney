@@ -16,7 +16,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         // Store login state
         sessionStorage.setItem('adminAuthenticated', 'true');
         // Redirect to dashboard
-        window.location.href = './dashboard.html';
+        window.location.href = '../index.html';
     } else {
         errorMessage.style.display = 'block';
         document.getElementById('password').value = '';
