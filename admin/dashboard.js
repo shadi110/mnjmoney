@@ -1,3 +1,38 @@
+// Check authentication on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const isAuthenticated = sessionStorage.getItem('adminAuthenticated') === 'true';
+    
+    if (!isAuthenticated) {
+        // Redirect to login if not authenticated
+        window.location.href = 'index.html';
+        return;
+    }
+    
+    // User is authenticated, initialize dashboard
+    initializeDashboard();
+});
+
+function logout() {
+    // Clear authentication
+    sessionStorage.removeItem('adminAuthenticated');
+    // Redirect to login page
+    window.location.href = 'index.html';
+}
+
+function initializeDashboard() {
+    updateCounts();
+    
+    // Add logout button to header if it doesn't exist
+    const header = document.querySelector('header');
+    if (header && !header.querySelector('.logout-btn')) {
+        const logoutBtn = document.createElement('button');
+        logoutBtn.textContent = 'Logout';
+        logoutBtn.className = 'logout-btn';
+        logoutBtn.onclick = logout;
+        header.appendChild(logoutBtn);
+    }
+}
+
 // Sample data - you'll replace this with real data from your storage
 let contactRequests = [
     { id: 1, name: "John Doe", email: "john@example.com", message: "Interested in services", date: "2024-01-15" },
@@ -10,12 +45,21 @@ let financialRequests = [
 ];
 
 function updateCounts() {
-    document.getElementById('contactCount').textContent = contactRequests.length;
-    document.getElementById('financialCount').textContent = financialRequests.length;
+    const contactCount = document.getElementById('contactCount');
+    const financialCount = document.getElementById('financialCount');
+    
+    if (contactCount) {
+        contactCount.textContent = contactRequests.length;
+    }
+    if (financialCount) {
+        financialCount.textContent = financialRequests.length;
+    }
 }
 
 function showContactRequests() {
     const container = document.getElementById('tablesContainer');
+    if (!container) return;
+    
     container.innerHTML = `
         <button class="back-button" onclick="hideTables()">← Back to Dashboard</button>
         <h2>Contact Us Requests</h2>
@@ -47,6 +91,8 @@ function showContactRequests() {
 
 function showFinancialRequests() {
     const container = document.getElementById('tablesContainer');
+    if (!container) return;
+    
     container.innerHTML = `
         <button class="back-button" onclick="hideTables()">← Back to Dashboard</button>
         <h2>Financial Requests</h2>
@@ -79,10 +125,8 @@ function showFinancialRequests() {
 }
 
 function hideTables() {
-    document.getElementById('tablesContainer').style.display = 'none';
+    const container = document.getElementById('tablesContainer');
+    if (container) {
+        container.style.display = 'none';
+    }
 }
-
-// Initialize the dashboard
-document.addEventListener('DOMContentLoaded', function() {
-    updateCounts();
-});
