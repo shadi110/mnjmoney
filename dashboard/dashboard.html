@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/dashboard/styles.css">
+</head>
+<body>
+    <div class="admin-container">
+        <header>
+            <h1>Admin Dashboard</h1>
+        </header>
+        
+        <div class="dashboard-grid">
+            <!-- Contact Us Requests Block -->
+            <div class="dashboard-card" onclick="showContactRequests()">
+                <div class="card-icon">📧</div>
+                <h3>Contact Us Requests</h3>
+                <div class="count-badge" id="contactCount">0</div>
+                <p>View all contact form submissions</p>
+            </div>
+
+            <!-- Financial Requests Block -->
+            <div class="dashboard-card" onclick="showFinancialRequests()">
+                <div class="card-icon">💰</div>
+                <h3>Financial Requests</h3>
+                <div class="count-badge" id="financialCount">0</div>
+                <p>View all financial service requests</p>
+            </div>
+        </div>
+
+        <!-- Tables Container -->
+        <div id="tablesContainer" class="tables-container" style="display: none;">
+            <!-- Tables will be loaded here dynamically -->
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

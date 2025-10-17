@@ -3,36 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Admin Login - MNJ Money</title>
     <link rel="stylesheet" href="/admin/styles.css">
 </head>
 <body>
-    <div class="admin-container">
-        <header>
-            <h1>Admin Dashboard</h1>
-        </header>
-        
-        <div class="dashboard-grid">
-            <!-- Contact Us Requests Block -->
-            <div class="dashboard-card" onclick="showContactRequests()">
-                <div class="card-icon">📧</div>
-                <h3>Contact Us Requests</h3>
-                <div class="count-badge" id="contactCount">0</div>
-                <p>View all contact form submissions</p>
+    <div class="login-container">
+        <div class="login-form">
+            <h2>Admin Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+            
+            <div id="errorMessage" class="error-message" style="display: none;">
+                Invalid username or password!
             </div>
-
-            <!-- Financial Requests Block -->
-            <div class="dashboard-card" onclick="showFinancialRequests()">
-                <div class="card-icon">💰</div>
-                <h3>Financial Requests</h3>
-                <div class="count-badge" id="financialCount">0</div>
-                <p>View all financial service requests</p>
+            
+            <div class="back-link">
+                <a href="../index.html">← Back to Main Site</a>
             </div>
-        </div>
-
-        <!-- Tables Container -->
-        <div id="tablesContainer" class="tables-container" style="display: none;">
-            <!-- Tables will be loaded here dynamically -->
         </div>
     </div>
 
