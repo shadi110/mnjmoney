@@ -144,7 +144,6 @@ async function showContactRequests() {
     const result = await loadContactRequests(currentContactPage);
     
     container.innerHTML = `
-        <button class="back-button" onclick="hideTables()">← Back to Dashboard</button>
         <h2>Contact Us Requests (${result.total})</h2>
         
         <div class="table-controls">
@@ -197,6 +196,7 @@ async function showContactRequests() {
     `;
     container.style.display = 'block';
 }
+
 async function showFinancialRequests() {
     const container = document.getElementById('tablesContainer');
     if (!container) return;
@@ -208,7 +208,6 @@ async function showFinancialRequests() {
     const result = await loadFinancialRequests(currentFinancialPage);
     
     container.innerHTML = `
-        <button class="back-button" onclick="hideTables()">← Back to Dashboard</button>
         <h2>Financial Service Requests (${result.total})</h2>
         
         <div class="table-controls">
@@ -267,6 +266,17 @@ async function showFinancialRequests() {
     `;
     container.style.display = 'block';
 }
+
+// Also update the hideTables function to show dashboard cards again
+function hideTables() {
+    const container = document.getElementById('tablesContainer');
+    if (container) {
+        container.style.display = 'none';
+    }
+    // Show the dashboard cards again
+    document.querySelector('.dashboard-grid').style.display = 'grid';
+}
+
 async function changeContactPage(page) {
     if (page < 1) return;
     

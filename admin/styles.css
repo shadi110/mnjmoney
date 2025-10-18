@@ -551,27 +551,24 @@ header h1 {
 /* Add these styles to your existing styles.css */
 
 /* Table Controls */
+/* Table Controls */
 .table-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 15px;
+    margin-bottom: 25px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
 }
 
 .search-box {
-    position: relative;
-    flex-grow: 1;
-    max-width: 400px;
     display: flex;
+    max-width: 500px;
+    margin-top: 10px;
 }
 
 .search-box input {
-    width: 100%;
-    padding: 10px 15px 10px 40px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px 0 0 4px;
+    flex: 1;
+    padding: 12px 15px 12px 45px;
+    border: 2px solid var(--border-color);
+    border-radius: 6px 0 0 6px;
     font-size: 1rem;
     transition: border-color 0.3s;
     border-right: none;
@@ -580,31 +577,36 @@ header h1 {
 .search-box input:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
 .search-icon {
     position: absolute;
-    left: 12px;
+    left: 15px;
     top: 50%;
     transform: translateY(-50%);
     color: #7f8c8d;
+    font-size: 1.1rem;
 }
 
 .search-button {
-    padding: 10px 20px;
+    padding: 12px 25px;
     background-color: var(--primary-color);
     color: white;
-    border: 1px solid var(--primary-color);
-    border-radius: 0 4px 4px 0;
+    border: 2px solid var(--primary-color);
+    border-radius: 0 6px 6px 0;
     cursor: pointer;
     font-size: 1rem;
-    transition: background-color 0.3s;
+    font-weight: 600;
+    transition: all 0.3s;
+    white-space: nowrap;
 }
 
 .search-button:hover {
     background-color: #2980b9;
     border-color: #2980b9;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Enhanced Table Styling */
@@ -612,14 +614,15 @@ header h1 {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
+    border: 1px solid #e1e1e1;
 }
 
 .data-table th,
 .data-table td {
-    padding: 12px 15px;
+    padding: 14px 16px;
     text-align: left;
     border: 1px solid #e1e1e1;
 }
@@ -628,7 +631,8 @@ header h1 {
     background-color: var(--secondary-color);
     color: white;
     font-weight: 600;
-    border-bottom: 2px solid var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+    font-size: 1rem;
 }
 
 .data-table tr:nth-child(even) {
@@ -644,93 +648,7 @@ header h1 {
     border-bottom: 1px solid #e1e1e1;
 }
 
-/* Pagination */
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.pagination button {
-    padding: 8px 16px;
-    border: 1px solid var(--border-color);
-    background-color: white;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s;
-    font-size: 0.9rem;
-}
-
-.pagination button:hover:not(:disabled) {
-    background-color: var(--light-color);
-    border-color: var(--primary-color);
-}
-
-.pagination button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.page-info {
-    margin: 0 15px;
-    font-size: 0.9rem;
-    color: var(--dark-color);
-    font-weight: 500;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .table-controls {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .search-box {
-        max-width: 100%;
-    }
-    
-    .data-table {
-        font-size: 0.9rem;
-    }
-    
-    .data-table th,
-    .data-table td {
-        padding: 8px 10px;
-    }
-    
-    .pagination {
-        flex-wrap: wrap;
-    }
-    
-    .pagination button {
-        padding: 6px 12px;
-        font-size: 0.8rem;
-    }
-    
-    .page-info {
-        margin: 0 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .pagination {
-        gap: 5px;
-    }
-    
-    .pagination button {
-        padding: 5px 10px;
-        font-size: 0.75rem;
-    }
-    
-    .page-info {
-        font-size: 0.8rem;
-        margin: 0 8px;
-    }
-    
-    .search-button {
-        padding: 10px 15px;
-        font-size: 0.9rem;
-    }
+/* Remove back button styles if they exist */
+.back-button {
+    display: none;
 }
