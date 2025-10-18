@@ -1829,3 +1829,81 @@ footer {
     gap: 10px;
     margin: 0;
 }
+
+/* Better modal styling for contact details */
+.request-details {
+    margin: 20px 0;
+}
+
+.detail-section {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #daa851;
+}
+
+.detail-section h3 {
+    margin: 0 0 15px 0;
+    color: #2F2F2F;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 8px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #2F2F2F;
+    min-width: 120px;
+}
+
+.detail-value {
+    color: #6c757d;
+    text-align: right;
+    flex: 1;
+    margin-left: 15px;
+}
+
+.message-content {
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+.raw-data {
+    background: #2F2F2F;
+    color: #fff;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    overflow-x: auto;
+}
+
+.raw-data pre {
+    margin: 0;
+    font-family: 'Courier New', monospace;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e9ecef;
+}

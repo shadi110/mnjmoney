@@ -484,20 +484,65 @@ function viewContact(contactId) {
     const contact = contactRequests.find(c => c.id === contactId);
     if (!contact) return;
     
+    // Extract data from message
+    const phone = extractPhoneFromMessage(contact.message) || 'Not provided';
+    const idNumber = extractIdNumberFromMessage(contact.message) || 'Not provided';
+    const area = extractAreaFromMessage(contact.message) || 'Not provided';
+    const message = contact.message.replace(/Phone:\s*[^,]+,\s*ID:\s*[^,]+,\s*Area:\s*[^,]+,\s*Message:\s*/i, '').trim();
+    
     const modal = document.createElement('div');
     modal.className = 'modal';
     modal.innerHTML = `
-        <div class="modal-content">
+        <div class="modal-content" style="max-width: 600px;">
             <span class="close" onclick="this.parentElement.parentElement.remove()">&times;</span>
-            <h2>Contact Details</h2>
-            <div class="contact-details">
-                <p><strong>ID:</strong> ${contact.id}</p>
-                <p><strong>Name:</strong> ${escapeHtml(contact.name)}</p>
-                <p><strong>Email:</strong> ${escapeHtml(contact.email)}</p>
-                <p><strong>Date:</strong> ${formatDate(contact.created_at)}</p>
-                <p><strong>Message:</strong></p>
-                <div class="message-content">${escapeHtml(contact.message)}</div>
+            <h2>Contact Request Details</h2>
+            
+            <div class="request-details">
+                <div class="detail-section">
+                    <h3>Basic Information</h3>
+                    <div class="detail-row">
+                        <span class="detail-label">Request ID:</span>
+                        <span class="detail-value">${contact.id}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Name:</span>
+                        <span class="detail-value">${escapeHtml(contact.name)}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Phone:</span>
+                        <span class="detail-value">${phone}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">ID Number:</span>
+                        <span class="detail-value">${idNumber}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Area:</span>
+                        <span class="detail-value">${area}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Submitted:</span>
+                        <span class="detail-value">${formatDate(contact.created_at)}</span>
+                    </div>
+                </div>
+                
+                ${message ? `
+                <div class="detail-section">
+                    <h3>Message</h3>
+                    <div class="message-content">
+                        ${escapeHtml(message)}
+                    </div>
+                </div>
+                ` : ''}
+                
+                <div class="detail-section">
+                    <h3>Raw Data</h3>
+                    <div class="raw-data">
+                        <pre>${escapeHtml(contact.message)}</pre>
+                    </div>
+                </div>
             </div>
+            
             <div class="modal-actions">
                 <button class="btn" onclick="this.parentElement.parentElement.parentElement.remove()">Close</button>
                 <button class="btn btn-danger" onclick="deleteContact(${contact.id})">Delete</button>
