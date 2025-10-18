@@ -21,8 +21,6 @@ function logout() {
 
 function initializeDashboard() {
     updateCounts();
-    loadContactRequests();
-    loadFinancialRequests();
     
     // Add logout button to header if it doesn't exist
     const header = document.querySelector('header');
@@ -35,9 +33,14 @@ function initializeDashboard() {
     }
 }
 
-// Global variables to store data
+// Global variables to store data and pagination
 let contactRequests = [];
 let financialRequests = [];
+let currentContactPage = 1;
+let currentFinancialPage = 1;
+let contactSearchTerm = '';
+let financialSearchTerm = '';
+const rowsPerPage = 10;
 
 // API base URL
 const API_BASE_URL = 'https://mnjmoney-be.onrender.com';
@@ -66,14 +69,18 @@ async function updateCounts() {
         }
     } catch (error) {
         console.error('Error updating counts:', error);
-        // Fallback to sample data if API fails
-        loadSampleData();
     }
 }
 
-async function loadContactRequests() {
+async function loadContactRequests(page = 1, search = '') {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/contacts?limit=1000`);
+        let url = `${API_BASE_URL}/api/contacts?limit=${rowsPerPage}&offset=${(page - 1) * rowsPerPage}`;
+        
+        if (search) {
+            url += `&search=${encodeURIComponent(search)}`;
+        }
+        
+        const response = await fetch(url);
         
         if (!response.ok) {
             throw new Error(`API error: ${response.status}`);
@@ -83,15 +90,27 @@ async function loadContactRequests() {
         
         if (result.success) {
             contactRequests = result.contacts;
+            return {
+                data: result.contacts,
+                total: result.total || 0,
+                hasNext: (page * rowsPerPage) < (result.total || 0)
+            };
         }
     } catch (error) {
         console.error('Error loading contact requests:', error);
+        return { data: [], total: 0, hasNext: false };
     }
 }
 
-async function loadFinancialRequests() {
+async function loadFinancialRequests(page = 1, search = '') {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/financial-requests?limit=1000`);
+        let url = `${API_BASE_URL}/api/financial-requests?limit=${rowsPerPage}&offset=${(page - 1) * rowsPerPage}`;
+        
+        if (search) {
+            url += `&search=${encodeURIComponent(search)}`;
+        }
+        
+        const response = await fetch(url);
         
         if (!response.ok) {
             throw new Error(`API error: ${response.status}`);
@@ -101,60 +120,39 @@ async function loadFinancialRequests() {
         
         if (result.success) {
             financialRequests = result.financial_requests;
-            console.log('Loaded financial requests:', financialRequests);
+            return {
+                data: result.financial_requests,
+                total: result.total || 0,
+                hasNext: (page * rowsPerPage) < (result.total || 0)
+            };
         }
     } catch (error) {
         console.error('Error loading financial requests:', error);
-        // Fallback to sample data
-        loadSampleFinancialData();
+        return { data: [], total: 0, hasNext: false };
     }
 }
 
-function loadSampleData() {
-    // Sample data as fallback
-    contactRequests = [
-        { 
-            id: 1, 
-            name: "John Doe", 
-            email: "john@example.com", 
-            message: "Interested in tax refund services", 
-            created_at: "2024-01-15T10:30:00" 
-        }
-    ];
-    
-    const contactCount = document.getElementById('contactCount');
-    const financialCount = document.getElementById('financialCount');
-    
-    if (contactCount) contactCount.textContent = contactRequests.length;
-    if (financialCount) financialCount.textContent = 0;
-}
-
-function loadSampleFinancialData() {
-    financialRequests = [
-        {
-            id: 1,
-            employment_status: "yes",
-            employment_type: "employee",
-            has_pay_slips: "yes",
-            previous_funds_history: "no",
-            service_interest: "tax-refunds",
-            preferred_language: "english",
-            full_name: "John Doe",
-            phone_number: "+1234567890",
-            email_address: "john@example.com",
-            created_at: "2024-01-15T10:30:00",
-            updated_at: "2024-01-15T10:30:00"
-        }
-    ];
-}
-
-function showContactRequests() {
+async function showContactRequests() {
     const container = document.getElementById('tablesContainer');
     if (!container) return;
     
+    // Reset to first page when showing contacts
+    currentContactPage = 1;
+    contactSearchTerm = '';
+    
+    const result = await loadContactRequests(currentContactPage);
+    
     container.innerHTML = `
         <button class="back-button" onclick="hideTables()">← Back to Dashboard</button>
-        <h2>Contact Us Requests (${contactRequests.length})</h2>
+        <h2>Contact Us Requests (${result.total})</h2>
+        
+        <div class="table-controls">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="contactSearch" placeholder="Search contacts..." onkeyup="handleContactSearch(event)">
+            </div>
+        </div>
+        
         <div class="table-container">
             <table class="data-table">
                 <thead>
@@ -168,7 +166,7 @@ function showContactRequests() {
                     </tr>
                 </thead>
                 <tbody>
-                    ${contactRequests.map(request => `
+                    ${result.data.map(request => `
                         <tr>
                             <td>${request.id}</td>
                             <td>${request.name}</td>
@@ -184,17 +182,41 @@ function showContactRequests() {
                 </tbody>
             </table>
         </div>
+        
+        <div class="pagination">
+            <button onclick="changeContactPage(${currentContactPage - 1})" ${currentContactPage <= 1 ? 'disabled' : ''}>
+                Previous
+            </button>
+            <span class="page-info">Page ${currentContactPage}</span>
+            <button onclick="changeContactPage(${currentContactPage + 1})" ${!result.hasNext ? 'disabled' : ''}>
+                Next
+            </button>
+        </div>
     `;
     container.style.display = 'block';
 }
 
-function showFinancialRequests() {
+async function showFinancialRequests() {
     const container = document.getElementById('tablesContainer');
     if (!container) return;
     
+    // Reset to first page when showing financial requests
+    currentFinancialPage = 1;
+    financialSearchTerm = '';
+    
+    const result = await loadFinancialRequests(currentFinancialPage);
+    
     container.innerHTML = `
         <button class="back-button" onclick="hideTables()">← Back to Dashboard</button>
-        <h2>Financial Service Requests (${financialRequests.length})</h2>
+        <h2>Financial Service Requests (${result.total})</h2>
+        
+        <div class="table-controls">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="financialSearch" placeholder="Search financial requests..." onkeyup="handleFinancialSearch(event)">
+            </div>
+        </div>
+        
         <div class="table-container">
             <table class="data-table">
                 <thead>
@@ -211,7 +233,7 @@ function showFinancialRequests() {
                     </tr>
                 </thead>
                 <tbody>
-                    ${financialRequests.map(request => `
+                    ${result.data.map(request => `
                         <tr>
                             <td>${request.id}</td>
                             <td>${request.full_name}</td>
@@ -230,8 +252,141 @@ function showFinancialRequests() {
                 </tbody>
             </table>
         </div>
+        
+        <div class="pagination">
+            <button onclick="changeFinancialPage(${currentFinancialPage - 1})" ${currentFinancialPage <= 1 ? 'disabled' : ''}>
+                Previous
+            </button>
+            <span class="page-info">Page ${currentFinancialPage}</span>
+            <button onclick="changeFinancialPage(${currentFinancialPage + 1})" ${!result.hasNext ? 'disabled' : ''}>
+                Next
+            </button>
+        </div>
     `;
     container.style.display = 'block';
+}
+
+async function changeContactPage(page) {
+    if (page < 1) return;
+    
+    currentContactPage = page;
+    const result = await loadContactRequests(currentContactPage, contactSearchTerm);
+    
+    if (result.data.length === 0 && page > 1) {
+        // If no data on this page, go back to previous page
+        currentContactPage--;
+        return;
+    }
+    
+    const container = document.getElementById('tablesContainer');
+    if (!container) return;
+    
+    const tableBody = container.querySelector('tbody');
+    const pagination = container.querySelector('.pagination');
+    const title = container.querySelector('h2');
+    
+    if (tableBody) {
+        tableBody.innerHTML = result.data.map(request => `
+            <tr>
+                <td>${request.id}</td>
+                <td>${request.name}</td>
+                <td>${request.email}</td>
+                <td class="message-cell">${request.message}</td>
+                <td>${formatDate(request.created_at)}</td>
+                <td>
+                    <button class="btn-small" onclick="viewContact(${request.id})">View</button>
+                    <button class="btn-small btn-danger" onclick="deleteContact(${request.id})">Delete</button>
+                </td>
+            </tr>
+        `).join('');
+    }
+    
+    if (title) {
+        title.textContent = `Contact Us Requests (${result.total})`;
+    }
+    
+    if (pagination) {
+        pagination.innerHTML = `
+            <button onclick="changeContactPage(${currentContactPage - 1})" ${currentContactPage <= 1 ? 'disabled' : ''}>
+                Previous
+            </button>
+            <span class="page-info">Page ${currentContactPage}</span>
+            <button onclick="changeContactPage(${currentContactPage + 1})" ${!result.hasNext ? 'disabled' : ''}>
+                Next
+            </button>
+        `;
+    }
+}
+
+async function changeFinancialPage(page) {
+    if (page < 1) return;
+    
+    currentFinancialPage = page;
+    const result = await loadFinancialRequests(currentFinancialPage, financialSearchTerm);
+    
+    if (result.data.length === 0 && page > 1) {
+        // If no data on this page, go back to previous page
+        currentFinancialPage--;
+        return;
+    }
+    
+    const container = document.getElementById('tablesContainer');
+    if (!container) return;
+    
+    const tableBody = container.querySelector('tbody');
+    const pagination = container.querySelector('.pagination');
+    const title = container.querySelector('h2');
+    
+    if (tableBody) {
+        tableBody.innerHTML = result.data.map(request => `
+            <tr>
+                <td>${request.id}</td>
+                <td>${request.full_name}</td>
+                <td>${request.phone_number}</td>
+                <td>${request.email_address}</td>
+                <td>${formatEmployment(request.employment_status, request.employment_type)}</td>
+                <td>${formatServiceType(request.service_interest)}</td>
+                <td>${formatLanguage(request.preferred_language)}</td>
+                <td>${formatDate(request.created_at)}</td>
+                <td>
+                    <button class="btn-small" onclick="viewFinancialRequest(${request.id})">View</button>
+                    <button class="btn-small btn-danger" onclick="deleteFinancialRequest(${request.id})">Delete</button>
+                </td>
+            </tr>
+        `).join('');
+    }
+    
+    if (title) {
+        title.textContent = `Financial Service Requests (${result.total})`;
+    }
+    
+    if (pagination) {
+        pagination.innerHTML = `
+            <button onclick="changeFinancialPage(${currentFinancialPage - 1})" ${currentFinancialPage <= 1 ? 'disabled' : ''}>
+                Previous
+            </button>
+            <span class="page-info">Page ${currentFinancialPage}</span>
+            <button onclick="changeFinancialPage(${currentFinancialPage + 1})" ${!result.hasNext ? 'disabled' : ''}>
+                Next
+            </button>
+        `;
+    }
+}
+
+function handleContactSearch(event) {
+    if (event.key === 'Enter') {
+        contactSearchTerm = event.target.value;
+        currentContactPage = 1;
+        changeContactPage(1);
+    }
+}
+
+function handleFinancialSearch(event) {
+    if (event.key === 'Enter') {
+        financialSearchTerm = event.target.value;
+        currentFinancialPage = 1;
+        changeFinancialPage(1);
+    }
 }
 
 function formatEmployment(status, type) {
@@ -371,14 +526,8 @@ async function deleteContact(contactId) {
         });
         
         if (response.ok) {
-            // Remove from local array
-            contactRequests = contactRequests.filter(c => c.id !== contactId);
-            
-            // Refresh the display
-            const container = document.getElementById('tablesContainer');
-            if (container && container.style.display !== 'none') {
-                showContactRequests();
-            }
+            // Refresh the current page
+            await changeContactPage(currentContactPage);
             
             // Update counts
             updateCounts();
@@ -404,14 +553,8 @@ async function deleteFinancialRequest(requestId) {
         });
         
         if (response.ok) {
-            // Remove from local array
-            financialRequests = financialRequests.filter(r => r.id !== requestId);
-            
-            // Refresh the display
-            const container = document.getElementById('tablesContainer');
-            if (container && container.style.display !== 'none') {
-                showFinancialRequests();
-            }
+            // Refresh the current page
+            await changeFinancialPage(currentFinancialPage);
             
             // Update counts
             updateCounts();
@@ -437,7 +580,5 @@ function hideTables() {
 setInterval(() => {
     if (document.getElementById('tablesContainer')?.style.display !== 'none') {
         updateCounts();
-        loadContactRequests();
-        loadFinancialRequests();
     }
 }, 30000);
