@@ -167,7 +167,8 @@ async function showContactRequests() {
                         <th>ID</th>
                         <th>Name</th>
                         <th>Phone</th>
-                        <th>Message</th>
+                        <th>ID Number</th>
+                        <th>Area</th>
                         <th>Date</th>
                         <th>Actions</th>
                     </tr>
@@ -178,7 +179,8 @@ async function showContactRequests() {
                             <td>${request.id}</td>
                             <td>${escapeHtml(request.name)}</td>
                             <td>${extractPhoneFromMessage(request.message) || 'N/A'}</td>
-                            <td class="message-cell">${escapeHtml(request.message)}</td>
+                            <td>${extractIdNumberFromMessage(request.message) || 'N/A'}</td>
+                            <td>${extractAreaFromMessage(request.message) || 'N/A'}</td>
                             <td>${formatDate(request.created_at)}</td>
                             <td>
                                 <button class="btn-small" onclick="viewContact(${request.id})">View</button>
@@ -187,7 +189,7 @@ async function showContactRequests() {
                         </tr>
                     `).join('') : `
                         <tr>
-                            <td colspan="6" style="text-align: center; padding: 20px;">No contact requests found</td>
+                            <td colspan="7" style="text-align: center; padding: 20px;">No contact requests found</td>
                         </tr>
                     `}
                 </tbody>
@@ -208,6 +210,7 @@ async function showContactRequests() {
     `;
     container.style.display = 'block';
 }
+
 async function showFinancialRequests() {
     const container = document.getElementById('tablesContainer');
     if (!container) return;
@@ -599,6 +602,37 @@ function extractPhoneFromMessage(message) {
     if (matches && matches.length > 0) {
         // Return the first phone number found
         return matches[0].trim();
+    }
+    
+    return null;
+}
+
+function extractIdNumberFromMessage(message) {
+    if (!message) return null;
+    
+    // Look for ID number patterns (Israeli ID format - 9 digits)
+    const idRegex = /ID:\s*(\d{9})|ID\s*Number:\s*(\d{9})|\b\d{9}\b/g;
+    const matches = message.match(idRegex);
+    
+    if (matches && matches.length > 0) {
+        // Extract just the numbers
+        const numbers = matches[0].match(/\d{9}/);
+        return numbers ? numbers[0] : matches[0].trim();
+    }
+    
+    return null;
+}
+
+function extractAreaFromMessage(message) {
+    if (!message) return null;
+    
+    // Look for Area patterns
+    const areaRegex = /Area:\s*([^,\n]+)|Area\s*:\s*([^,\n]+)/i;
+    const matches = message.match(areaRegex);
+    
+    if (matches && matches.length > 0) {
+        // Return the area value (group 1 or 2)
+        return matches[1] || matches[2] || matches[0].replace(/Area:\s*/i, '').trim();
     }
     
     return null;
