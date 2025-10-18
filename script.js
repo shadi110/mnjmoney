@@ -1,7 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Set Arabic as default - ADD THIS AT THE BEGINNING
+    let currentLang = 'ar'; // Changed from 'en' to 'ar'
+    document.documentElement.setAttribute('lang', 'ar');
+    document.body.setAttribute('dir', 'rtl');
+
     // Language Switching Functionality
     const languageButtons = document.querySelectorAll('.language-btn');
-    let currentLang = 'en'; // Default language
+    // Remove this line: let currentLang = 'en'; // Default language
 
     // Function to switch language
     function switchLanguage(lang) {
