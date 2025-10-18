@@ -22,7 +22,7 @@ const translations = {
         "step2Error": 'Please select your employment type to continue.',
         "step3Error": 'Please answer both questions about your documents and financial history.',
         "step4SelectionError": 'Please select both your service interest and preferred language.',
-        "step4ContactError": 'Please fill in all contact information fields.'
+        "step4ContactError": 'Please fill in all contact information fields.',
         
         // Hero Section
         "hero.title": "Recover Your Lost Money... In One Simple Step!",
@@ -284,7 +284,7 @@ const translations = {
         "step2Error": 'يرجى تحديد نوع التوظيف الخاص بك للمتابعة.',
         "step3Error": 'يرجى الإجابة على كلا السؤالين حول مستنداتك والتاريخ المالي.',
         "step4SelectionError": 'يرجى تحديد كل من الخدمة التي تهمك واللغة المفضلة.',
-        "step4ContactError": 'يرجى ملء جميع حقول معلومات الاتصال.'
+        "step4ContactError": 'يرجى ملء جميع حقول معلومات الاتصال.',
         
         // FAQ Section
         "faq.title": "الأسئلة الشائعة",
@@ -496,7 +496,7 @@ const translations = {
         "step2Error": 'אנא בחר את סוג התעסוקה שלך כדי להמשיך.',
         "step3Error": 'אנא ענה על שתי השאלות לגבי המסמכים וההיסטוריה הפיננסית שלך.',
         "step4SelectionError": 'אנא בחר גם את השירות שמעניין אותך וגם את השפה המועדפת.',
-        "step4ContactError": 'אנא מלא את כל שדות פרטי הקשר.'
+        "step4ContactError": 'אנא מלא את כל שדות פרטי הקשר.',
         
         // Contact Section
         "contact.title": "צור קשר",
