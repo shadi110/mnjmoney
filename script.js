@@ -438,24 +438,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Enhanced survey step validation
-	function validateSurveyStep(step) {
-    // Get current language function
-    function getCurrentLanguage() {
-        // Check if language is stored in localStorage
-        const storedLang = localStorage.getItem('preferred-language');
-        if (storedLang) return storedLang;
-        
-        // Check active language button
-        const activeLangBtn = document.querySelector('.language-btn.active');
-        if (activeLangBtn) {
-            return activeLangBtn.getAttribute('data-lang');
-        }
-        
-        // Default to Arabic (as per your default)
-        return 'ar';
-    }
-
-    const currentLang = getCurrentLanguage();
+  function validateSurveyStep(step) {
+    const currentLang = getCurrentLanguage(); // You need to implement this function
 
     switch(step) {
         case 1:
@@ -497,8 +481,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
         default:
             return true;
-}}}
-
+    
+      }
+	}
     // Option button selection
     document.querySelectorAll('.option-btn').forEach(btn => {
         btn.addEventListener('click', function() {
