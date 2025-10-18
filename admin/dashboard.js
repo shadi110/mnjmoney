@@ -147,10 +147,10 @@ async function showContactRequests() {
     
     container.innerHTML = `
         <button class="back-to-dashboard-btn" onclick="hideTables()">
-			<i class="fas fa-arrow-left"></i> Back to Dashboard
-		</button>
-		<div style="margin-bottom: 30px;"></div> <!-- Added space -->
-		<h2>Contact Us Requests (${result.total})</h2>
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </button>
+        <div style="margin-bottom: 30px;"></div> <!-- Added space -->
+        <h2>Contact Us Requests (${result.total})</h2>
         
         <div class="table-controls">
             <div class="search-box">
@@ -166,7 +166,7 @@ async function showContactRequests() {
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Email</th>
+                        <th>Phone</th>
                         <th>Message</th>
                         <th>Date</th>
                         <th>Actions</th>
@@ -177,7 +177,7 @@ async function showContactRequests() {
                         <tr>
                             <td>${request.id}</td>
                             <td>${escapeHtml(request.name)}</td>
-                            <td>${escapeHtml(request.email)}</td>
+                            <td>${extractPhoneFromMessage(request.message) || 'N/A'}</td>
                             <td class="message-cell">${escapeHtml(request.message)}</td>
                             <td>${formatDate(request.created_at)}</td>
                             <td>
@@ -208,7 +208,6 @@ async function showContactRequests() {
     `;
     container.style.display = 'block';
 }
-
 async function showFinancialRequests() {
     const container = document.getElementById('tablesContainer');
     if (!container) return;
@@ -223,10 +222,11 @@ async function showFinancialRequests() {
     const result = await loadFinancialRequests(currentFinancialPage);
     
     container.innerHTML = `
-        <a href="#" class="back-to-dashboard" onclick="hideTables()">
-            <i class="fas fa-arrow-left"></i> Back to Dashboard
-        </a>
-        <h2>Financial Service Requests (${result.total})</h2>
+        <button class="back-to-dashboard-btn" onclick="hideTables()">
+			<i class="fas fa-arrow-left"></i> Back to Dashboard
+		</button>
+		<div style="margin-bottom: 30px;"></div> <!-- Added space -->
+		<h2>Contact Us Requests (${result.total})</h2>
         
         <div class="table-controls">
             <div class="search-box">
@@ -587,6 +587,21 @@ async function deleteContact(contactId) {
         console.error('Error deleting contact:', error);
         alert('Error deleting contact. Please try again.');
     }
+}
+
+function extractPhoneFromMessage(message) {
+    if (!message) return null;
+    
+    // Look for phone patterns in the message
+    const phoneRegex = /(\+?\d{1,3}[-.\s]?)?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9}/g;
+    const matches = message.match(phoneRegex);
+    
+    if (matches && matches.length > 0) {
+        // Return the first phone number found
+        return matches[0].trim();
+    }
+    
+    return null;
 }
 
 async function deleteFinancialRequest(requestId) {
