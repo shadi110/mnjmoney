@@ -551,15 +551,17 @@ header h1 {
 /* Add these styles to your existing styles.css */
 
 /* Table Controls */
+/* Add this to your existing styles.css file */
+
 /* Table Controls */
 .table-controls {
     margin-bottom: 25px;
     padding-top: 15px;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid #bdc3c7;
 }
 
 .search-box {
-    display: flex;
+    display: flex !important;
     max-width: 500px;
     margin-top: 10px;
     position: relative;
@@ -568,7 +570,7 @@ header h1 {
 .search-box input {
     flex: 1;
     padding: 12px 15px 12px 45px;
-    border: 2px solid var(--border-color);
+    border: 2px solid #bdc3c7;
     border-radius: 6px 0 0 6px;
     font-size: 1rem;
     transition: border-color 0.3s;
@@ -577,7 +579,7 @@ header h1 {
 
 .search-box input:focus {
     outline: none;
-    border-color: var(--primary-color);
+    border-color: #3498db;
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
@@ -592,26 +594,27 @@ header h1 {
 }
 
 .search-button {
-    padding: 12px 25px;
-    background-color: #3498db !important;
+    padding: 12px 25px !important;
+    background: #3498db !important;
     color: white !important;
     border: 2px solid #3498db !important;
-    border-radius: 0 6px 6px 0;
+    border-radius: 0 6px 6px 0 !important;
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
     transition: all 0.3s;
     white-space: nowrap;
+    display: block !important;
+    visibility: visible !important;
 }
 
 .search-button:hover {
-    background-color: #2980b9 !important;
+    background: #2980b9 !important;
     border-color: #2980b9 !important;
     transform: translateY(-1px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Enhanced Table Styling */
+/* Enhanced Table Styling - FIXED HEADERS */
 .data-table {
     width: 100%;
     border-collapse: collapse;
@@ -629,8 +632,9 @@ header h1 {
     border: 1px solid #e1e1e1;
 }
 
+/* FIXED: Table headers with proper colors */
 .data-table th {
-    background-color: #2c3e50 !important;
+    background: #2c3e50 !important;
     color: white !important;
     font-weight: 600;
     border-bottom: 3px solid #3498db;
@@ -643,7 +647,6 @@ header h1 {
 
 .data-table tr:hover {
     background-color: #e3f2fd;
-    transition: background-color 0.2s;
 }
 
 .data-table td {
@@ -651,25 +654,64 @@ header h1 {
     color: #333;
 }
 
-/* Make sure table header text is visible */
-.data-table th {
-    color: white !important;
-    text-shadow: none;
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
 }
 
-/* Remove back button styles */
+.pagination button {
+    padding: 8px 16px;
+    border: 1px solid #bdc3c7;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+.pagination button:hover:not(:disabled) {
+    background: #ecf0f1;
+    border-color: #3498db;
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-info {
+    margin: 0 15px;
+    font-size: 0.9rem;
+    color: #34495e;
+    font-weight: 500;
+}
+
+/* Remove back button */
 .back-button {
     display: none;
 }
 
-/* Ensure colors are defined */
-:root {
-    --primary-color: #3498db;
-    --secondary-color: #2c3e50;
-    --danger-color: #e74c3c;
-    --success-color: #2ecc71;
-    --light-color: #ecf0f1;
-    --dark-color: #34495e;
-    --border-color: #bdc3c7;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/* Responsive */
+@media (max-width: 768px) {
+    .table-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-box {
+        max-width: 100%;
+    }
+    
+    .data-table {
+        font-size: 0.9rem;
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: 8px 10px;
+    }
 }

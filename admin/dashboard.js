@@ -132,10 +132,12 @@ async function loadFinancialRequests(page = 1, search = '') {
     }
 }
 
-
 async function showContactRequests() {
     const container = document.getElementById('tablesContainer');
     if (!container) return;
+    
+    // Hide dashboard cards
+    document.querySelector('.dashboard-grid').style.display = 'none';
     
     // Reset to first page when showing contacts
     currentContactPage = 1;
@@ -149,7 +151,7 @@ async function showContactRequests() {
         <div class="table-controls">
             <div class="search-box">
                 <span class="search-icon">🔍</span>
-                <input type="text" id="contactSearch" placeholder="Search contacts..." onkeyup="handleContactSearch(event)">
+                <input type="text" id="contactSearch" placeholder="Search contacts..." onkeyup="handleContactSearch(event)" value="${contactSearchTerm}">
                 <button class="search-button" onclick="handleContactSearch(event)">Search</button>
             </div>
         </div>
@@ -167,7 +169,7 @@ async function showContactRequests() {
                     </tr>
                 </thead>
                 <tbody>
-                    ${result.data.map(request => `
+                    ${result.data.length > 0 ? result.data.map(request => `
                         <tr>
                             <td>${request.id}</td>
                             <td>${request.name}</td>
@@ -179,11 +181,16 @@ async function showContactRequests() {
                                 <button class="btn-small btn-danger" onclick="deleteContact(${request.id})">Delete</button>
                             </td>
                         </tr>
-                    `).join('')}
+                    `).join('') : `
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 20px;">No contact requests found</td>
+                        </tr>
+                    `}
                 </tbody>
             </table>
         </div>
         
+        ${result.total > 0 ? `
         <div class="pagination">
             <button onclick="changeContactPage(${currentContactPage - 1})" ${currentContactPage <= 1 ? 'disabled' : ''}>
                 Previous
@@ -193,6 +200,7 @@ async function showContactRequests() {
                 Next
             </button>
         </div>
+        ` : ''}
     `;
     container.style.display = 'block';
 }
@@ -200,6 +208,9 @@ async function showContactRequests() {
 async function showFinancialRequests() {
     const container = document.getElementById('tablesContainer');
     if (!container) return;
+    
+    // Hide dashboard cards
+    document.querySelector('.dashboard-grid').style.display = 'none';
     
     // Reset to first page when showing financial requests
     currentFinancialPage = 1;
@@ -213,7 +224,7 @@ async function showFinancialRequests() {
         <div class="table-controls">
             <div class="search-box">
                 <span class="search-icon">🔍</span>
-                <input type="text" id="financialSearch" placeholder="Search financial requests..." onkeyup="handleFinancialSearch(event)">
+                <input type="text" id="financialSearch" placeholder="Search financial requests..." onkeyup="handleFinancialSearch(event)" value="${financialSearchTerm}">
                 <button class="search-button" onclick="handleFinancialSearch(event)">Search</button>
             </div>
         </div>
@@ -234,7 +245,7 @@ async function showFinancialRequests() {
                     </tr>
                 </thead>
                 <tbody>
-                    ${result.data.map(request => `
+                    ${result.data.length > 0 ? result.data.map(request => `
                         <tr>
                             <td>${request.id}</td>
                             <td>${request.full_name}</td>
@@ -249,11 +260,16 @@ async function showFinancialRequests() {
                                 <button class="btn-small btn-danger" onclick="deleteFinancialRequest(${request.id})">Delete</button>
                             </td>
                         </tr>
-                    `).join('')}
+                    `).join('') : `
+                        <tr>
+                            <td colspan="9" style="text-align: center; padding: 20px;">No financial requests found</td>
+                        </tr>
+                    `}
                 </tbody>
             </table>
         </div>
         
+        ${result.total > 0 ? `
         <div class="pagination">
             <button onclick="changeFinancialPage(${currentFinancialPage - 1})" ${currentFinancialPage <= 1 ? 'disabled' : ''}>
                 Previous
@@ -263,18 +279,9 @@ async function showFinancialRequests() {
                 Next
             </button>
         </div>
+        ` : ''}
     `;
     container.style.display = 'block';
-}
-
-// Also update the hideTables function to show dashboard cards again
-function hideTables() {
-    const container = document.getElementById('tablesContainer');
-    if (container) {
-        container.style.display = 'none';
-    }
-    // Show the dashboard cards again
-    document.querySelector('.dashboard-grid').style.display = 'grid';
 }
 
 async function changeContactPage(page) {
@@ -297,7 +304,7 @@ async function changeContactPage(page) {
     const title = container.querySelector('h2');
     
     if (tableBody) {
-        tableBody.innerHTML = result.data.map(request => `
+        tableBody.innerHTML = result.data.length > 0 ? result.data.map(request => `
             <tr>
                 <td>${request.id}</td>
                 <td>${request.name}</td>
@@ -309,7 +316,11 @@ async function changeContactPage(page) {
                     <button class="btn-small btn-danger" onclick="deleteContact(${request.id})">Delete</button>
                 </td>
             </tr>
-        `).join('');
+        `).join('') : `
+            <tr>
+                <td colspan="6" style="text-align: center; padding: 20px;">No contact requests found</td>
+            </tr>
+        `;
     }
     
     if (title) {
@@ -317,15 +328,19 @@ async function changeContactPage(page) {
     }
     
     if (pagination) {
-        pagination.innerHTML = `
-            <button onclick="changeContactPage(${currentContactPage - 1})" ${currentContactPage <= 1 ? 'disabled' : ''}>
-                Previous
-            </button>
-            <span class="page-info">Page ${currentContactPage}</span>
-            <button onclick="changeContactPage(${currentContactPage + 1})" ${!result.hasNext ? 'disabled' : ''}>
-                Next
-            </button>
-        `;
+        if (result.total > 0) {
+            pagination.innerHTML = `
+                <button onclick="changeContactPage(${currentContactPage - 1})" ${currentContactPage <= 1 ? 'disabled' : ''}>
+                    Previous
+                </button>
+                <span class="page-info">Page ${currentContactPage}</span>
+                <button onclick="changeContactPage(${currentContactPage + 1})" ${!result.hasNext ? 'disabled' : ''}>
+                    Next
+                </button>
+            `;
+        } else {
+            pagination.innerHTML = '';
+        }
     }
 }
 
@@ -349,7 +364,7 @@ async function changeFinancialPage(page) {
     const title = container.querySelector('h2');
     
     if (tableBody) {
-        tableBody.innerHTML = result.data.map(request => `
+        tableBody.innerHTML = result.data.length > 0 ? result.data.map(request => `
             <tr>
                 <td>${request.id}</td>
                 <td>${request.full_name}</td>
@@ -364,7 +379,11 @@ async function changeFinancialPage(page) {
                     <button class="btn-small btn-danger" onclick="deleteFinancialRequest(${request.id})">Delete</button>
                 </td>
             </tr>
-        `).join('');
+        `).join('') : `
+            <tr>
+                <td colspan="9" style="text-align: center; padding: 20px;">No financial requests found</td>
+            </tr>
+        `;
     }
     
     if (title) {
@@ -372,15 +391,19 @@ async function changeFinancialPage(page) {
     }
     
     if (pagination) {
-        pagination.innerHTML = `
-            <button onclick="changeFinancialPage(${currentFinancialPage - 1})" ${currentFinancialPage <= 1 ? 'disabled' : ''}>
-                Previous
-            </button>
-            <span class="page-info">Page ${currentFinancialPage}</span>
-            <button onclick="changeFinancialPage(${currentFinancialPage + 1})" ${!result.hasNext ? 'disabled' : ''}>
-                Next
-            </button>
-        `;
+        if (result.total > 0) {
+            pagination.innerHTML = `
+                <button onclick="changeFinancialPage(${currentFinancialPage - 1})" ${currentFinancialPage <= 1 ? 'disabled' : ''}>
+                    Previous
+                </button>
+                <span class="page-info">Page ${currentFinancialPage}</span>
+                <button onclick="changeFinancialPage(${currentFinancialPage + 1})" ${!result.hasNext ? 'disabled' : ''}>
+                    Next
+                </button>
+            `;
+        } else {
+            pagination.innerHTML = '';
+        }
     }
 }
 
@@ -585,6 +608,8 @@ function hideTables() {
     if (container) {
         container.style.display = 'none';
     }
+    // Show the dashboard cards again
+    document.querySelector('.dashboard-grid').style.display = 'grid';
 }
 
 // Refresh data every 30 seconds
