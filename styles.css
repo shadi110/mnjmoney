@@ -1907,3 +1907,16 @@ footer {
     padding-top: 20px;
     border-top: 1px solid #e9ecef;
 }
+.customer-video::-webkit-media-controls-panel {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.video-wrapper:hover .customer-video::-webkit-media-controls-panel {
+    opacity: 1;
+}
+
+/* Hide the default play button specifically */
+.customer-video::-webkit-media-controls-play-button {
+    display: none;
+}
