@@ -9,6 +9,13 @@ const translations = {
         "nav.faq": "FAQ",
         "nav.about": "About Us",
         "nav.contact": "Contact",
+		'survey.next': 'Next',
+        'survey.previous': 'Previous',
+		'contact.address1': 'Main Street Yafa an-Nasirah, Israel',
+        'contact.address2': 'Beit Hanina, Baladi Mall',
+        'contact.phone': '+972 52-461-9009',
+        'contact.email': 'office@ksafem-mnj.com',
+		'footer.followUs': 'Follow Us',
         
         // Hero Section
         "hero.title": "Recover Your Lost Money... In One Simple Step!",
@@ -185,6 +192,13 @@ const translations = {
         "nav.faq": "الأسئلة الشائعة",
         "nav.about": "من نحن",
         "nav.contact": "اتصل بنا",
+		'survey.next': 'التالي',
+        'survey.previous': 'السابق',
+		'contact.address1': ' الشارع الرئيسي يافة الناصرة, Yafa an-Nasirah, Israel ',
+        'contact.address2': ' بيت حنينا ، بلدي مول ',
+        'contact.phone': ' +972 52-461-9009 ',
+        'contact.email': ' office@ksafem-mnj.com ',
+		'footer.followUs': 'تابعونا',
         
         // Hero Section
         "hero.title": "استرجع أموالك الضائعة... بخطوة واحدة!",
@@ -361,12 +375,15 @@ const translations = {
         "nav.faq": "שאלות נפוצות",
         "nav.about": "אודות",
         "nav.contact": "צור קשר",
+		'survey.next': 'הבא',
+        'survey.previous': 'קודם',
         
         // Hero Section
         "hero.title": "החזר הכספים האבודים שלך... בצעד אחד פשוט!",
         "hero.subtitle": "אנשים רבים מאבדים את כספם מבלי לדעת - מיסים עודפים, כספים רדומים, או זכויות פיננסיות שאף אחד לא סיפר להם עליהם. אנחנו כאן כדי להחזיר לך את הזכויות בקלות ובשקיפות.",
         "hero.btnFreeCheck": "התחל בדיקה חינם עכשיו",
         "hero.btnSurvey": "סקר אימות מהיר (90 שניות)",
+		'footer.followUs': 'עקבו אחרינו',
         
         // Why Choose MNJ Section
         "whyChoose.title": "למה עדיף לבחור ב-MNJ?",
@@ -405,6 +422,10 @@ const translations = {
         "howItWorks.step3": "קבל דוח ברור",
         "howItWorks.step3Desc": "קבל דוח מפורט של כל הזכויות שלך והסכומים שאתה יכול להחזיר.",
         "howItWorks.startNow": "התחל עכשיו",
+		'contact.address1': ' הרחוב הראשי יאפא א-נאצרה, ישראל ',
+        'contact.address2': 'בית חנינא, קניון בלאדי',
+        'contact.phone': '+972 52-461-9009',
+        'contact.email': 'office@ksafem-mnj.com',
         
         // Achievements Section
         "achievements.title": "חלק קטן מהישגי MNJ",

@@ -40,7 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
-        
+		
+        updateSurveyNavigationText();
         // Save language preference
         localStorage.setItem('preferred-language', lang);
     }
@@ -144,6 +145,19 @@ document.addEventListener('DOMContentLoaded', function() {
         currentImageIndex = (currentImageIndex + 1) % totalImages;
         updateLightboxImage();
     }
+	
+	function updateSurveyNavigationText() {
+		const nextButtons = document.querySelectorAll('.next-btn');
+		const prevButtons = document.querySelectorAll('.prev-btn');
+    
+		nextButtons.forEach(btn => {
+			btn.textContent = getTranslation('survey.next');
+		});
+    
+		prevButtons.forEach(btn => {
+			btn.textContent = getTranslation('survey.previous');
+		});
+	}
 
     function closeLightbox() {
         lightbox.classList.remove('active');
