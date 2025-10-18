@@ -1,12 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Set Arabic as default - ADD THIS AT THE BEGINNING
-    let currentLang = 'ar'; // Changed from 'en' to 'ar'
+    // Set Arabic as default
+    let currentLang = 'ar';
     document.documentElement.setAttribute('lang', 'ar');
     document.body.setAttribute('dir', 'rtl');
 
     // Language Switching Functionality
     const languageButtons = document.querySelectorAll('.language-btn');
-    // Remove this line: let currentLang = 'en'; // Default language
 
     // Function to switch language
     function switchLanguage(lang) {
@@ -40,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
-		
+        
         updateSurveyNavigationText();
         // Save language preference
         localStorage.setItem('preferred-language', lang);
@@ -145,19 +144,19 @@ document.addEventListener('DOMContentLoaded', function() {
         currentImageIndex = (currentImageIndex + 1) % totalImages;
         updateLightboxImage();
     }
-	
-	function updateSurveyNavigationText() {
-		const nextButtons = document.querySelectorAll('.next-btn');
-		const prevButtons = document.querySelectorAll('.prev-btn');
     
-		nextButtons.forEach(btn => {
-			btn.textContent = getTranslation('survey.next');
-		});
+    function updateSurveyNavigationText() {
+        const nextButtons = document.querySelectorAll('.next-btn');
+        const prevButtons = document.querySelectorAll('.prev-btn');
     
-		prevButtons.forEach(btn => {
-			btn.textContent = getTranslation('survey.previous');
-		});
-	}
+        nextButtons.forEach(btn => {
+            btn.textContent = getTranslation('survey.next');
+        });
+    
+        prevButtons.forEach(btn => {
+            btn.textContent = getTranslation('survey.previous');
+        });
+    }
 
     function closeLightbox() {
         lightbox.classList.remove('active');
@@ -238,27 +237,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-	document.querySelectorAll('.video-wrapper').forEach(wrapper => {
-  const video = wrapper.querySelector('video');
-  const overlay = wrapper.querySelector('.video-overlay');
+    document.querySelectorAll('.video-wrapper').forEach(wrapper => {
+        const video = wrapper.querySelector('video');
+        const overlay = wrapper.querySelector('.video-overlay');
 
-  // Handle overlay click (toggle play/pause)
-  overlay.addEventListener('click', () => {
-    if (video.paused) {
-      video.play();
-      wrapper.classList.add('playing');
-    } else {
-      video.pause();
-      wrapper.classList.remove('playing');
-    }
-  });
+        // Handle overlay click (toggle play/pause)
+        overlay.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+                wrapper.classList.add('playing');
+            } else {
+                video.pause();
+                wrapper.classList.remove('playing');
+            }
+        });
 
-  // Handle video play/pause updates (sync overlay visibility)
-  video.addEventListener('play', () => wrapper.classList.add('playing'));
-  video.addEventListener('pause', () => wrapper.classList.remove('playing'));
-});
+        // Handle video play/pause updates (sync overlay visibility)
+        video.addEventListener('play', () => wrapper.classList.add('playing'));
+        video.addEventListener('pause', () => wrapper.classList.remove('playing'));
+    });
 
-	
     document.getElementById('prevStep2').addEventListener('click', function() {
         currentStep = 0;
         updateSurveyProgress();
@@ -345,7 +343,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Survey Form Submission - UPDATED for Financial Requests API
+    // Survey Form Submission
     document.getElementById('submitSurvey').addEventListener('click', async function() {
         if (validateSurveyStep(4)) {
             const submitBtn = this;
@@ -439,66 +437,66 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Enhanced survey step validation
     function validateSurveyStep(step) {
-    // Get current language function
-    function getCurrentLanguage() {
-        // Check if language is stored in localStorage
-        const storedLang = localStorage.getItem('preferred-language');
-        if (storedLang) return storedLang;
-        
-        // Check active language button
-        const activeLangBtn = document.querySelector('.language-btn.active');
-        if (activeLangBtn) {
-            return activeLangBtn.getAttribute('data-lang');
+        function getCurrentLanguage() {
+            // Check if language is stored in localStorage
+            const storedLang = localStorage.getItem('preferred-language');
+            if (storedLang) return storedLang;
+            
+            // Check active language button
+            const activeLangBtn = document.querySelector('.language-btn.active');
+            if (activeLangBtn) {
+                return activeLangBtn.getAttribute('data-lang');
+            }
+            
+            // Default to Arabic
+            return 'ar';
         }
-        
-        // Default to Arabic (as per your default)
-        return 'ar';
-    }
 
-    const currentLang = getCurrentLanguage();
+        const currentLang = getCurrentLanguage();
 
-    switch(step) {
-        case 1:
-            const step1Selected = document.querySelector('#step1 .option-btn.selected') !== null;
-            if (!step1Selected) {
-                alert(translations[currentLang].step1Error);
-            }
-            return step1Selected;
-            
-        case 2:
-            const step2Selected = document.querySelector('#step2 .option-btn.selected') !== null;
-            if (!step2Selected) {
-                alert(translations[currentLang].step2Error);
-            }
-            return step2Selected;
-            
-        case 3:
-            const step3Selections = document.querySelectorAll('#step3 .option-btn.selected');
-            const step3Valid = step3Selections.length === 2;
-            if (!step3Valid) {
-                alert(translations[currentLang].step3Error);
-            }
-            return step3Valid;
-            
-        case 4:
-            const step4Selections = document.querySelectorAll('#step4 .option-btn.selected');
-            const contactFields = document.querySelectorAll('#surveyContactForm input');
-            const step4Valid = step4Selections.length === 2 && 
-                           Array.from(contactFields).every(input => input.value.trim() !== '');
-            
-            if (!step4Valid) {
-                if (step4Selections.length < 2) {
-                    alert(translations[currentLang].step4SelectionError);
-                } else {
-                    alert(translations[currentLang].step4ContactError);
+        switch(step) {
+            case 1:
+                const step1Selected = document.querySelector('#step1 .option-btn.selected') !== null;
+                if (!step1Selected) {
+                    alert(translations[currentLang].step1Error);
                 }
-            }
-            return step4Valid;
-            
-        default:
-            return true;
+                return step1Selected;
+                
+            case 2:
+                const step2Selected = document.querySelector('#step2 .option-btn.selected') !== null;
+                if (!step2Selected) {
+                    alert(translations[currentLang].step2Error);
+                }
+                return step2Selected;
+                
+            case 3:
+                const step3Selections = document.querySelectorAll('#step3 .option-btn.selected');
+                const step3Valid = step3Selections.length === 2;
+                if (!step3Valid) {
+                    alert(translations[currentLang].step3Error);
+                }
+                return step3Valid;
+                
+            case 4:
+                const step4Selections = document.querySelectorAll('#step4 .option-btn.selected');
+                const contactFields = document.querySelectorAll('#surveyContactForm input');
+                const step4Valid = step4Selections.length === 2 && 
+                               Array.from(contactFields).every(input => input.value.trim() !== '');
+                
+                if (!step4Valid) {
+                    if (step4Selections.length < 2) {
+                        alert(translations[currentLang].step4SelectionError);
+                    } else {
+                        alert(translations[currentLang].step4ContactError);
+                    }
+                }
+                return step4Valid;
+                
+            default:
+                return true;
+        }
     }
-}
+
     // Option button selection
     document.querySelectorAll('.option-btn').forEach(btn => {
         btn.addEventListener('click', function() {
@@ -670,38 +668,37 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Play button / overlay unified click
-videoWrappers.forEach((wrapper, index) => {
-    const video = videos[index];
-    const playBtn = wrapper.querySelector('.play-btn');
+        videoWrappers.forEach((wrapper, index) => {
+            const video = videos[index];
+            const playBtn = wrapper.querySelector('.play-btn');
 
-    wrapper.addEventListener('click', function(e) {
-        // Ignore clicks outside overlay/play button if you want
-        if (e.target !== playBtn && !e.target.closest('.play-btn')) return;
+            wrapper.addEventListener('click', function(e) {
+                // Ignore clicks outside overlay/play button if you want
+                if (e.target !== playBtn && !e.target.closest('.play-btn')) return;
 
-        if (video.paused) {
-            video.play().catch(err => console.error(err));
-        } else {
-            video.pause();
-        }
-    });
+                if (video.paused) {
+                    video.play().catch(err => console.error(err));
+                } else {
+                    video.pause();
+                }
+            });
 
-    // Sync wrapper class and icon with video state
-    video.addEventListener('play', () => {
-        wrapper.classList.add('playing');
-        if (playBtn) playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-    });
+            // Sync wrapper class and icon with video state
+            video.addEventListener('play', () => {
+                wrapper.classList.add('playing');
+                if (playBtn) playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            });
 
-    video.addEventListener('pause', () => {
-        wrapper.classList.remove('playing');
-        if (playBtn) playBtn.innerHTML = '<i class="fas fa-play"></i>';
-    });
+            video.addEventListener('pause', () => {
+                wrapper.classList.remove('playing');
+                if (playBtn) playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            });
 
-    video.addEventListener('ended', () => {
-        wrapper.classList.remove('playing');
-        if (playBtn) playBtn.innerHTML = '<i class="fas fa-play"></i>';
-    });
-});
-
+            video.addEventListener('ended', () => {
+                wrapper.classList.remove('playing');
+                if (playBtn) playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            });
+        });
     }
 
     // Initialize video section
