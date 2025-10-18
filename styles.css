@@ -1749,3 +1749,6 @@ footer {
         font-size: 1rem;
     }
 }
+.video-wrapper.playing .video-overlay {
+  display: none;
+}

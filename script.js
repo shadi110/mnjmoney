@@ -238,6 +238,27 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+	document.querySelectorAll('.video-wrapper').forEach(wrapper => {
+  const video = wrapper.querySelector('video');
+  const overlay = wrapper.querySelector('.video-overlay');
+
+  // Handle overlay click (toggle play/pause)
+  overlay.addEventListener('click', () => {
+    if (video.paused) {
+      video.play();
+      wrapper.classList.add('playing');
+    } else {
+      video.pause();
+      wrapper.classList.remove('playing');
+    }
+  });
+
+  // Handle video play/pause updates (sync overlay visibility)
+  video.addEventListener('play', () => wrapper.classList.add('playing'));
+  video.addEventListener('pause', () => wrapper.classList.remove('playing'));
+});
+
+	
     document.getElementById('prevStep2').addEventListener('click', function() {
         currentStep = 0;
         updateSurveyProgress();
