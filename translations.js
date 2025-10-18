@@ -16,6 +16,13 @@ const translations = {
         'contact.phone': '+972 52-461-9009',
         'contact.email': 'office@ksafem-mnj.com',
 		'footer.followUs': 'Follow Us',
+		
+		
+		"step1Error": 'Please select your employment status to continue.',
+        "step2Error": 'Please select your employment type to continue.',
+        "step3Error": 'Please answer both questions about your documents and financial history.',
+        "step4SelectionError": 'Please select both your service interest and preferred language.',
+        "step4ContactError": 'Please fill in all contact information fields.'
         
         // Hero Section
         "hero.title": "Recover Your Lost Money... In One Simple Step!",
@@ -271,6 +278,13 @@ const translations = {
         "videos.client1Desc": "استردت 3,800 دولار من الضرائب الزائدة",
         "videos.client2": "استرداد ديفيد لصندوق التقاعد",
         "videos.client2Desc": "تم الوصول إلى 15,200 دولار من الأموال المنسية",
+		
+		
+		"step1Error": 'يرجى تحديد حالة التوظيف الخاصة بك للمتابعة.',
+        "step2Error": 'يرجى تحديد نوع التوظيف الخاص بك للمتابعة.',
+        "step3Error": 'يرجى الإجابة على كلا السؤالين حول مستنداتك والتاريخ المالي.',
+        "step4SelectionError": 'يرجى تحديد كل من الخدمة التي تهمك واللغة المفضلة.',
+        "step4ContactError": 'يرجى ملء جميع حقول معلومات الاتصال.'
         
         // FAQ Section
         "faq.title": "الأسئلة الشائعة",
@@ -476,6 +490,13 @@ const translations = {
         "about.p2": "עם הניסיון שלנו, אנו יודעים היכן לחפש וכיצד להחזיר את המגיע, בין אם מדובר במיסים או בכספים אבודים. קבל כל פרוטה בחזרה למקומה!",
         "about.p3": "צור איתנו קשר היום והפוך את השבת הזכויות שלך לקלה ביותר, ואם לא תנצח... לא תפסיד 🖖🦾",
         "about.contactBtn": "צור קשר היום",
+		
+		
+		"step1Error": 'אנא בחר את סטטוס התעסוקה שלך כדי להמשיך.',
+        "step2Error": 'אנא בחר את סוג התעסוקה שלך כדי להמשיך.',
+        "step3Error": 'אנא ענה על שתי השאלות לגבי המסמכים וההיסטוריה הפיננסית שלך.',
+        "step4SelectionError": 'אנא בחר גם את השירות שמעניין אותך וגם את השפה המועדפת.',
+        "step4ContactError": 'אנא מלא את כל שדות פרטי הקשר.'
         
         // Contact Section
         "contact.title": "צור קשר",

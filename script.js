@@ -439,49 +439,51 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Enhanced survey step validation
     function validateSurveyStep(step) {
-        switch(step) {
-            case 1:
-                const step1Selected = document.querySelector('#step1 .option-btn.selected') !== null;
-                if (!step1Selected) {
-                    alert('Please select your employment status to continue.');
-                }
-                return step1Selected;
-                
-            case 2:
-                const step2Selected = document.querySelector('#step2 .option-btn.selected') !== null;
-                if (!step2Selected) {
-                    alert('Please select your employment type to continue.');
-                }
-                return step2Selected;
-                
-            case 3:
-                const step3Selections = document.querySelectorAll('#step3 .option-btn.selected');
-                const step3Valid = step3Selections.length === 2;
-                if (!step3Valid) {
-                    alert('Please answer both questions about your documents and financial history.');
-                }
-                return step3Valid;
-                
-            case 4:
-                const step4Selections = document.querySelectorAll('#step4 .option-btn.selected');
-                const contactFields = document.querySelectorAll('#surveyContactForm input');
-                const step4Valid = step4Selections.length === 2 && 
-                               Array.from(contactFields).every(input => input.value.trim() !== '');
-                
-                if (!step4Valid) {
-                    if (step4Selections.length < 2) {
-                        alert('Please select both your service interest and preferred language.');
-                    } else {
-                        alert('Please fill in all contact information fields.');
-                    }
-                }
-                return step4Valid;
-                
-            default:
-                return true;
-        }
-    }
+        const currentLang = getCurrentLanguage(); // You need to implement this function
 
+    switch(step) {
+        case 1:
+            const step1Selected = document.querySelector('#step1 .option-btn.selected') !== null;
+            if (!step1Selected) {
+                alert(translations[currentLang].step1Error);
+            }
+            return step1Selected;
+            
+        case 2:
+            const step2Selected = document.querySelector('#step2 .option-btn.selected') !== null;
+            if (!step2Selected) {
+                alert(translations[currentLang].step2Error);
+            }
+            return step2Selected;
+            
+        case 3:
+            const step3Selections = document.querySelectorAll('#step3 .option-btn.selected');
+            const step3Valid = step3Selections.length === 2;
+            if (!step3Valid) {
+                alert(translations[currentLang].step3Error);
+            }
+            return step3Valid;
+            
+        case 4:
+            const step4Selections = document.querySelectorAll('#step4 .option-btn.selected');
+            const contactFields = document.querySelectorAll('#surveyContactForm input');
+            const step4Valid = step4Selections.length === 2 && 
+                           Array.from(contactFields).every(input => input.value.trim() !== '');
+            
+            if (!step4Valid) {
+                if (step4Selections.length < 2) {
+                    alert(translations[currentLang].step4SelectionError);
+                } else {
+                    alert(translations[currentLang].step4ContactError);
+                }
+            }
+            return step4Valid;
+            
+        default:
+            return true;
+    
+      }
+	}
     // Option button selection
     document.querySelectorAll('.option-btn').forEach(btn => {
         btn.addEventListener('click', function() {
