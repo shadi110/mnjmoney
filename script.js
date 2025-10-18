@@ -652,20 +652,39 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Click on video wrapper to play/pause
-        videoWrappers.forEach((wrapper, index) => {
-            wrapper.addEventListener('click', function(e) {
-                if (e.target.classList.contains('play-btn') || e.target.closest('.play-btn')) {
-                    return; // Let the play button handle it
-                }
-                const video = videos[index];
-                if (video.paused) {
-                    video.play();
-                } else {
-                    video.pause();
-                }
-            });
-        });
+        // Play button / overlay unified click
+videoWrappers.forEach((wrapper, index) => {
+    const video = videos[index];
+    const playBtn = wrapper.querySelector('.play-btn');
+
+    wrapper.addEventListener('click', function(e) {
+        // Ignore clicks outside overlay/play button if you want
+        if (e.target !== playBtn && !e.target.closest('.play-btn')) return;
+
+        if (video.paused) {
+            video.play().catch(err => console.error(err));
+        } else {
+            video.pause();
+        }
+    });
+
+    // Sync wrapper class and icon with video state
+    video.addEventListener('play', () => {
+        wrapper.classList.add('playing');
+        if (playBtn) playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    });
+
+    video.addEventListener('pause', () => {
+        wrapper.classList.remove('playing');
+        if (playBtn) playBtn.innerHTML = '<i class="fas fa-play"></i>';
+    });
+
+    video.addEventListener('ended', () => {
+        wrapper.classList.remove('playing');
+        if (playBtn) playBtn.innerHTML = '<i class="fas fa-play"></i>';
+    });
+});
+
     }
 
     // Initialize video section
