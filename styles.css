@@ -1341,7 +1341,7 @@ footer {
 /* Customer Videos Section */
 .customer-videos {
     background: var(--background);
-    padding: 80px 0;
+    padding: 40px 0;
 }
 
 .videos-container {
@@ -1632,7 +1632,7 @@ footer {
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 30px;
     margin-bottom: 50px;
 }
@@ -1654,7 +1654,8 @@ footer {
 
 .customer-videos {
     grid-column: 1 / -1; /* This makes the videos section span full width */
-    margin-top: 20px;
+    margin-top: 10px;
+	margin-left: 10px;
 }
 
 .videos-container {
