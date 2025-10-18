@@ -1338,176 +1338,7 @@ footer {
     }
 }
 
-/* Customer Videos Section */
-.customer-videos {
-    background: var(--background);
-    padding: 40px 0;
-}
 
-.videos-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 40px;
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.video-card {
-    background: var(--white);
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: all 0.4s ease;
-    opacity: 0;
-    transform: translateY(50px);
-}
-
-.video-card.animate-in {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.video-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.video-wrapper {
-    position: relative;
-    width: 100%;
-    height: 250px;
-    overflow: hidden;
-    background: var(--primary);
-}
-
-.customer-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: all 0.4s ease;
-}
-
-.video-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(47, 47, 47, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 1;
-    transition: all 0.3s ease;
-}
-
-.video-wrapper.playing .video-overlay {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.play-btn {
-    width: 70px;
-    height: 70px;
-    background: var(--secondary);
-    border: none;
-    border-radius: 50%;
-    color: var(--primary);
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: pulse 2s infinite;
-}
-
-.play-btn:hover {
-    transform: scale(1.1);
-    background: var(--white);
-}
-
-.video-info {
-    padding: 25px;
-    text-align: center;
-}
-
-.video-info h3 {
-    color: var(--primary);
-    margin-bottom: 10px;
-    font-size: 1.3rem;
-}
-
-.video-info p {
-    color: var(--text-light);
-    margin: 0;
-}
-
-/* Video loading animation */
-.video-card:nth-child(1) {
-    animation-delay: 0.2s;
-}
-
-.video-card:nth-child(2) {
-    animation-delay: 0.4s;
-}
-
-/* Video controls customization */
-.customer-video::-webkit-media-controls-panel {
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
-}
-
-.customer-video::-webkit-media-controls-play-button {
-    background-color: var(--secondary);
-    border-radius: 50%;
-}
-
-.customer-video::-webkit-media-controls-current-time-display,
-.customer-video::-webkit-media-controls-time-remaining-display {
-    color: var(--white);
-}
-
-/* Responsive Videos */
-@media (max-width: 768px) {
-    .videos-container {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-    
-    .video-wrapper {
-        height: 200px;
-    }
-    
-    .play-btn {
-        width: 60px;
-        height: 60px;
-        font-size: 1.3rem;
-    }
-    
-    .video-info {
-        padding: 20px;
-    }
-    
-    .video-info h3 {
-        font-size: 1.2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .videos-container {
-        grid-template-columns: 1fr;
-    }
-    
-    .video-wrapper {
-        height: 180px;
-    }
-    
-    .play-btn {
-        width: 50px;
-        height: 50px;
-        font-size: 1.1rem;
-    }
-}
 
 /* Why Choose MNJ Section */
 .why-choose {
@@ -1652,130 +1483,7 @@ footer {
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
-.customer-videos {
-    grid-column: 1 / -1; /* This makes the videos section span full width */
-    margin-top: 10px;
-	margin-left: 10px;
-}
 
-.videos-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-    width: 100%;
-}
-
-.video-card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.video-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-}
-
-.video-wrapper {
-    position: relative;
-    width: 100%;
-    height: 300px; /* Increased height for bigger videos */
-    overflow: hidden;
-}
-
-.customer-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.video-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.video-wrapper:hover .video-overlay {
-    opacity: 1;
-}
-
-.play-btn {
-    background: rgba(218, 168, 81, 0.9);
-    border: none;
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.3s ease;
-}
-
-.play-btn:hover {
-    background: #daa851;
-    transform: scale(1.1);
-}
-
-.play-btn i {
-    color: white;
-    font-size: 24px;
-    margin-left: 5px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .services-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .videos-container {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .video-wrapper {
-        height: 250px;
-    }
-    
-    .play-btn {
-        width: 60px;
-        height: 60px;
-    }
-    
-    .play-btn i {
-        font-size: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .service-card {
-        padding: 30px 20px;
-    }
-    
-    .video-wrapper {
-        height: 200px;
-    }
-    
-    .play-btn {
-        width: 50px;
-        height: 50px;
-    }
-    
-    .play-btn i {
-        font-size: 18px;
-    }
-}
 
 /* Update the step indicator styles */
 .step-indicator.active {
@@ -1908,3 +1616,136 @@ footer {
     border-top: 1px solid #e9ecef;
 }
 
+
+
+/* --- Customer Videos Section --- */
+.customer-videos {
+    background: var(--background);
+    padding: 40px 0;
+    grid-column: 1 / -1;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.videos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* --- Video Card --- */
+.video-card {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+.video-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Video Wrapper & Overlay --- */
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    background: var(--primary);
+}
+
+.customer-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Overlay always visible before play */
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(47, 47, 47, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+/* Hide overlay while playing */
+.video-wrapper.playing .video-overlay {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* --- Play Button --- */
+.play-btn {
+    width: 70px;
+    height: 70px;
+    background: var(--secondary);
+    border: none;
+    border-radius: 50%;
+    color: var(--primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.play-btn:hover {
+    transform: scale(1.1);
+    background: var(--white);
+}
+
+/* --- Video Control Bar Styling --- */
+.customer-video::-webkit-media-controls-panel {
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .videos-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .video-wrapper {
+        height: 250px;
+    }
+
+    .play-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .video-wrapper {
+        height: 200px;
+    }
+
+    .play-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1rem;
+    }
+}
