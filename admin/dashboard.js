@@ -146,12 +146,14 @@ async function showContactRequests() {
     const result = await loadContactRequests(currentContactPage);
     
     container.innerHTML = `
-        <button class="back-button" onclick="hideTables()">← Back to Dashboard</button>
+        <a href="#" class="back-to-dashboard" onclick="hideTables()">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
         <h2>Contact Us Requests (${result.total})</h2>
         
         <div class="table-controls">
             <div class="search-box">
-                <span class="search-icon">🔍</span>
+                <span class="search-icon"><i class="fas fa-search"></i></span>
                 <input type="text" id="contactSearch" placeholder="Search contacts..." onkeyup="handleContactSearch(event)" value="${contactSearchTerm}">
                 <button class="search-button" onclick="handleContactSearch(event)">Search</button>
             </div>
@@ -173,9 +175,9 @@ async function showContactRequests() {
                     ${result.data.length > 0 ? result.data.map(request => `
                         <tr>
                             <td>${request.id}</td>
-                            <td>${request.name}</td>
-                            <td>${request.email}</td>
-                            <td class="message-cell">${request.message}</td>
+                            <td>${escapeHtml(request.name)}</td>
+                            <td>${escapeHtml(request.email)}</td>
+                            <td class="message-cell">${escapeHtml(request.message)}</td>
                             <td>${formatDate(request.created_at)}</td>
                             <td>
                                 <button class="btn-small" onclick="viewContact(${request.id})">View</button>
@@ -194,11 +196,11 @@ async function showContactRequests() {
         ${result.total > 0 ? `
         <div class="pagination">
             <button onclick="changeContactPage(${currentContactPage - 1})" ${currentContactPage <= 1 ? 'disabled' : ''}>
-                Previous
+                <i class="fas fa-chevron-left"></i> Previous
             </button>
-            <span class="page-info">Page ${currentContactPage}</span>
+            <span class="page-info">Page ${currentContactPage} of ${Math.ceil(result.total / rowsPerPage)}</span>
             <button onclick="changeContactPage(${currentContactPage + 1})" ${!result.hasNext ? 'disabled' : ''}>
-                Next
+                Next <i class="fas fa-chevron-right"></i>
             </button>
         </div>
         ` : ''}
@@ -220,12 +222,14 @@ async function showFinancialRequests() {
     const result = await loadFinancialRequests(currentFinancialPage);
     
     container.innerHTML = `
-        <button class="back-button" onclick="hideTables()">← Back to Dashboard</button>
+        <a href="#" class="back-to-dashboard" onclick="hideTables()">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
         <h2>Financial Service Requests (${result.total})</h2>
         
         <div class="table-controls">
             <div class="search-box">
-                <span class="search-icon">🔍</span>
+                <span class="search-icon"><i class="fas fa-search"></i></span>
                 <input type="text" id="financialSearch" placeholder="Search financial requests..." onkeyup="handleFinancialSearch(event)" value="${financialSearchTerm}">
                 <button class="search-button" onclick="handleFinancialSearch(event)">Search</button>
             </div>
@@ -250,9 +254,9 @@ async function showFinancialRequests() {
                     ${result.data.length > 0 ? result.data.map(request => `
                         <tr>
                             <td>${request.id}</td>
-                            <td>${request.full_name}</td>
-                            <td>${request.phone_number}</td>
-                            <td>${request.email_address}</td>
+                            <td>${escapeHtml(request.full_name)}</td>
+                            <td>${escapeHtml(request.phone_number)}</td>
+                            <td>${escapeHtml(request.email_address)}</td>
                             <td>${formatEmployment(request.employment_status, request.employment_type)}</td>
                             <td>${formatServiceType(request.service_interest)}</td>
                             <td>${formatLanguage(request.preferred_language)}</td>
@@ -274,11 +278,11 @@ async function showFinancialRequests() {
         ${result.total > 0 ? `
         <div class="pagination">
             <button onclick="changeFinancialPage(${currentFinancialPage - 1})" ${currentFinancialPage <= 1 ? 'disabled' : ''}>
-                Previous
+                <i class="fas fa-chevron-left"></i> Previous
             </button>
-            <span class="page-info">Page ${currentFinancialPage}</span>
+            <span class="page-info">Page ${currentFinancialPage} of ${Math.ceil(result.total / rowsPerPage)}</span>
             <button onclick="changeFinancialPage(${currentFinancialPage + 1})" ${!result.hasNext ? 'disabled' : ''}>
-                Next
+                Next <i class="fas fa-chevron-right"></i>
             </button>
         </div>
         ` : ''}
@@ -309,9 +313,9 @@ async function changeContactPage(page) {
         tableBody.innerHTML = result.data.length > 0 ? result.data.map(request => `
             <tr>
                 <td>${request.id}</td>
-                <td>${request.name}</td>
-                <td>${request.email}</td>
-                <td class="message-cell">${request.message}</td>
+                <td>${escapeHtml(request.name)}</td>
+                <td>${escapeHtml(request.email)}</td>
+                <td class="message-cell">${escapeHtml(request.message)}</td>
                 <td>${formatDate(request.created_at)}</td>
                 <td>
                     <button class="btn-small" onclick="viewContact(${request.id})">View</button>
@@ -333,11 +337,11 @@ async function changeContactPage(page) {
         if (result.total > 0) {
             pagination.innerHTML = `
                 <button onclick="changeContactPage(${currentContactPage - 1})" ${currentContactPage <= 1 ? 'disabled' : ''}>
-                    Previous
+                    <i class="fas fa-chevron-left"></i> Previous
                 </button>
-                <span class="page-info">Page ${currentContactPage}</span>
+                <span class="page-info">Page ${currentContactPage} of ${Math.ceil(result.total / rowsPerPage)}</span>
                 <button onclick="changeContactPage(${currentContactPage + 1})" ${!result.hasNext ? 'disabled' : ''}>
-                    Next
+                    Next <i class="fas fa-chevron-right"></i>
                 </button>
             `;
         } else {
@@ -369,9 +373,9 @@ async function changeFinancialPage(page) {
         tableBody.innerHTML = result.data.length > 0 ? result.data.map(request => `
             <tr>
                 <td>${request.id}</td>
-                <td>${request.full_name}</td>
-                <td>${request.phone_number}</td>
-                <td>${request.email_address}</td>
+                <td>${escapeHtml(request.full_name)}</td>
+                <td>${escapeHtml(request.phone_number)}</td>
+                <td>${escapeHtml(request.email_address)}</td>
                 <td>${formatEmployment(request.employment_status, request.employment_type)}</td>
                 <td>${formatServiceType(request.service_interest)}</td>
                 <td>${formatLanguage(request.preferred_language)}</td>
@@ -396,11 +400,11 @@ async function changeFinancialPage(page) {
         if (result.total > 0) {
             pagination.innerHTML = `
                 <button onclick="changeFinancialPage(${currentFinancialPage - 1})" ${currentFinancialPage <= 1 ? 'disabled' : ''}>
-                    Previous
+                    <i class="fas fa-chevron-left"></i> Previous
                 </button>
-                <span class="page-info">Page ${currentFinancialPage}</span>
+                <span class="page-info">Page ${currentFinancialPage} of ${Math.ceil(result.total / rowsPerPage)}</span>
                 <button onclick="changeFinancialPage(${currentFinancialPage + 1})" ${!result.hasNext ? 'disabled' : ''}>
-                    Next
+                    Next <i class="fas fa-chevron-right"></i>
                 </button>
             `;
         } else {
@@ -466,6 +470,12 @@ function formatDate(dateString) {
     }
 }
 
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
 function viewContact(contactId) {
     const contact = contactRequests.find(c => c.id === contactId);
     if (!contact) return;
@@ -478,11 +488,11 @@ function viewContact(contactId) {
             <h2>Contact Details</h2>
             <div class="contact-details">
                 <p><strong>ID:</strong> ${contact.id}</p>
-                <p><strong>Name:</strong> ${contact.name}</p>
-                <p><strong>Email:</strong> ${contact.email}</p>
+                <p><strong>Name:</strong> ${escapeHtml(contact.name)}</p>
+                <p><strong>Email:</strong> ${escapeHtml(contact.email)}</p>
                 <p><strong>Date:</strong> ${formatDate(contact.created_at)}</p>
                 <p><strong>Message:</strong></p>
-                <div class="message-content">${contact.message}</div>
+                <div class="message-content">${escapeHtml(contact.message)}</div>
             </div>
             <div class="modal-actions">
                 <button class="btn" onclick="this.parentElement.parentElement.parentElement.remove()">Close</button>
@@ -507,9 +517,9 @@ function viewFinancialRequest(requestId) {
                 <div class="detail-section">
                     <h3>Personal Information</h3>
                     <p><strong>ID:</strong> ${request.id}</p>
-                    <p><strong>Full Name:</strong> ${request.full_name}</p>
-                    <p><strong>Phone:</strong> ${request.phone_number}</p>
-                    <p><strong>Email:</strong> ${request.email_address}</p>
+                    <p><strong>Full Name:</strong> ${escapeHtml(request.full_name)}</p>
+                    <p><strong>Phone:</strong> ${escapeHtml(request.phone_number)}</p>
+                    <p><strong>Email:</strong> ${escapeHtml(request.email_address)}</p>
                     <p><strong>Preferred Language:</strong> ${formatLanguage(request.preferred_language)}</p>
                 </div>
                 

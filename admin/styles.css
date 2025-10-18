@@ -609,8 +609,8 @@ header h1 {
 }
 
 .search-button:hover {
-    background: #2980b9 !important;
-    border-color: #2980b9 !important;
+    background:  #a87c2d !important;
+    border-color: #a87c2d  !important;
     transform: translateY(-1px);
 }
 
