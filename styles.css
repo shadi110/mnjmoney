@@ -1907,3 +1907,37 @@ footer {
     padding-top: 20px;
     border-top: 1px solid #e9ecef;
 }
+/* Hide native video controls initially */
+.customer-video::-webkit-media-controls {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.customer-video:hover::-webkit-media-controls {
+    opacity: 1;
+}
+
+/* For Firefox */
+.customer-video::-moz-media-controls {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.customer-video:hover::-moz-media-controls {
+    opacity: 1;
+}
+
+/* Optional: overlay play button stays centered */
+.video-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-wrapper {
+    position: relative;
+    overflow: hidden;
+}
