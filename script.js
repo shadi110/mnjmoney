@@ -438,8 +438,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Enhanced survey step validation
-  function validateSurveyStep(step) {
-    const currentLang = getCurrentLanguage(); // You need to implement this function
+    function validateSurveyStep(step) {
+        const currentLang = getCurrentLanguage(); // You need to implement this function
 
     switch(step) {
         case 1:
@@ -482,7 +482,7 @@ document.addEventListener('DOMContentLoaded', function() {
         default:
             return true;
     
-      }
+    }
 	}
     // Option button selection
     document.querySelectorAll('.option-btn').forEach(btn => {
