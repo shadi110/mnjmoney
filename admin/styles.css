@@ -521,3 +521,28 @@ header h1 {
 .logout-btn:hover {
     background: #c82333;
 }
+
+.detail-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+.detail-section h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.detail-section p {
+    margin: 5px 0;
+    padding: 2px 0;
+}
+
+.detail-section strong {
+    color: #555;
+    min-width: 160px;
+    display: inline-block;
+}
