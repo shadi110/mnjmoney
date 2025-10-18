@@ -535,12 +535,7 @@ function viewContact(contactId) {
                 </div>
                 ` : ''}
                 
-                <div class="detail-section">
-                    <h3>Raw Data</h3>
-                    <div class="raw-data">
-                        <pre>${escapeHtml(contact.message)}</pre>
-                    </div>
-                </div>
+             
             </div>
             
             <div class="modal-actions">
