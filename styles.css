@@ -1,7 +1,7 @@
 /* Updated Color Variables - Grey, White, Yellow */
 :root {
     --primary: #2F2F2F;      /* Dark Grey */
-    --secondary: #FFD700;    /* Yellow */
+    --secondary: #daa851;    /* Yellow */
     --accent: #E74C3C;
     --light: #F8F9FA;        /* Light Grey/White */
     --dark: #1A1A1A;         /* Very Dark Grey */
@@ -1613,4 +1613,19 @@ footer {
     .benefit-card h3 {
         font-size: 1.2rem;
     }
+}
+
+.back-button {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: inline-block !important;
+}
+
+.back-button:hover {
+    background: #545b62;
 }
