@@ -1907,20 +1907,3 @@ footer {
     padding-top: 20px;
     border-top: 1px solid #e9ecef;
 }
-/* Show controls only when video is playing */
-.customer-video:not([controls]) {
-    /* Fallback for when controls are removed */
-}
-
-.video-wrapper.playing .customer-video::-webkit-media-controls-panel {
-    opacity: 1;
-}
-
-.customer-video::-webkit-media-controls-panel {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.customer-video::-webkit-media-controls-play-button {
-    display: none;
-}
