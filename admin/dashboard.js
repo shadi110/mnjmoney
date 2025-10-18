@@ -146,6 +146,7 @@ async function showContactRequests() {
     const result = await loadContactRequests(currentContactPage);
     
     container.innerHTML = `
+        <button class="back-button" onclick="hideTables()">← Back to Dashboard</button>
         <h2>Contact Us Requests (${result.total})</h2>
         
         <div class="table-controls">
@@ -219,6 +220,7 @@ async function showFinancialRequests() {
     const result = await loadFinancialRequests(currentFinancialPage);
     
     container.innerHTML = `
+        <button class="back-button" onclick="hideTables()">← Back to Dashboard</button>
         <h2>Financial Service Requests (${result.total})</h2>
         
         <div class="table-controls">
