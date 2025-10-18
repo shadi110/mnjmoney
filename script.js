@@ -1,3 +1,13 @@
+if (typeof translations === 'undefined') {
+    console.error('Translations not loaded! Make sure translations.js loads before script.js');
+    // Create a fallback empty translations object to prevent errors
+    var translations = {
+        en: {},
+        ar: {}, 
+        he: {}
+    };
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Set Arabic as default
     let currentLang = 'ar';
