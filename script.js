@@ -1,14 +1,8 @@
-if (typeof translations === 'undefined') {
-    console.error('Translations not loaded! Make sure translations.js loads before script.js');
-    // Create a fallback empty translations object to prevent errors
-    var translations = {
-        en: {},
-        ar: {}, 
-        he: {}
-    };
-}
-
 document.addEventListener('DOMContentLoaded', function() {
+    // Debug: Check if translations are loaded
+    console.log('Translations loaded:', typeof translations !== 'undefined');
+    console.log('Available languages:', translations ? Object.keys(translations) : 'none');
+    
     // Set Arabic as default
     let currentLang = 'ar';
     document.documentElement.setAttribute('lang', 'ar');
@@ -67,6 +61,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const savedLang = localStorage.getItem('preferred-language');
     if (savedLang) {
         switchLanguage(savedLang);
+    }
+
+    // Debug: Check Arabic translations
+    console.log('Arabic translations available:', translations.ar ? 'Yes' : 'No');
+    if (translations.ar) {
+        console.log('Sample Arabic translation:', translations.ar['nav.home']);
     }
 
     // Mobile Menu Toggle
