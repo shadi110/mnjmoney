@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Survey navigation
     document.getElementById('nextStep1').addEventListener('click', function() {
-        if (validateStep(1)) {
+        if (validateSurveyStep(1)) {
             currentStep = 1;
             updateSurveyProgress();
         }
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('nextStep2').addEventListener('click', function() {
-        if (validateStep(2)) {
+        if (validateSurveyStep(2)) {
             currentStep = 2;
             updateSurveyProgress();
         }
@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('nextStep3').addEventListener('click', function() {
-        if (validateStep(3)) {
+        if (validateSurveyStep(3)) {
             currentStep = 3;
             updateSurveyProgress();
         }
@@ -305,9 +305,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Survey Form Submission
+    // Survey Form Submission - UPDATED for Financial Requests API
     document.getElementById('submitSurvey').addEventListener('click', async function() {
-        if (validateStep(4)) {
+        if (validateSurveyStep(4)) {
             const submitBtn = this;
             const originalText = submitBtn.textContent;
             
@@ -316,59 +316,130 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.disabled = true;
 
             try {
-                // Get survey data
-                const fullNameInput = document.querySelector('#surveyContactForm input[placeholder*="Name"], #surveyContactForm input[placeholder*="اسم"], #surveyContactForm input[placeholder*="שם"]');
-                const phoneInput = document.querySelector('#surveyContactForm input[placeholder*="Phone"], #surveyContactForm input[placeholder*="هاتف"], #surveyContactForm input[placeholder*="טלפון"]');
-                const emailInput = document.querySelector('#surveyContactForm input[placeholder*="Email"], #surveyContactForm input[placeholder*="بريد"], #surveyContactForm input[placeholder*="אימייל"]');
-                
-                const fullName = fullNameInput?.value || '';
-                const phone = phoneInput?.value || '';
-                const email = emailInput?.value || '';
-                
-                // Get selected options
-                const employmentStatus = document.querySelector('#step1 .option-btn.selected')?.dataset.value || 'Not specified';
-                const employmentType = document.querySelector('#step2 .option-btn.selected')?.dataset.value || 'Not specified';
-                const servicesInterest = document.querySelector('#step4 .option-btn.selected')?.dataset.value || 'Not specified';
-                const preferredLanguage = document.querySelectorAll('#step4 .option-btn.selected')[1]?.dataset.value || 'Not specified';
+                // Get all survey data
+                const surveyData = {
+                    // Step 1: Employment Status
+                    employment_status: document.querySelector('#step1 .option-btn.selected')?.dataset.value || '',
+                    
+                    // Step 2: Employment Type
+                    employment_type: document.querySelector('#step2 .option-btn.selected')?.dataset.value || '',
+                    
+                    // Step 3: Documents & History
+                    has_pay_slips: document.querySelectorAll('#step3 .option-btn.selected')[0]?.dataset.value || '',
+                    previous_funds_history: document.querySelectorAll('#step3 .option-btn.selected')[1]?.dataset.value || '',
+                    
+                    // Step 4: Services & Contact
+                    service_interest: document.querySelectorAll('#step4 .option-btn.selected')[0]?.dataset.value || '',
+                    preferred_language: document.querySelectorAll('#step4 .option-btn.selected')[1]?.dataset.value || '',
+                    
+                    // Contact Information
+                    full_name: document.querySelector('#surveyContactForm input[placeholder*="Name"]')?.value || '',
+                    phone_number: document.querySelector('#surveyContactForm input[placeholder*="Phone"]')?.value || '',
+                    email_address: document.querySelector('#surveyContactForm input[placeholder*="Email"]')?.value || ''
+                };
 
-                // Send to backend
-                const response = await fetch('https://mnjmoney-be.onrender.com/api/contact', {
+                // Validate all fields are filled
+                const emptyFields = Object.entries(surveyData).filter(([key, value]) => !value.trim());
+                if (emptyFields.length > 0) {
+                    alert('Please fill in all fields before submitting.');
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    return;
+                }
+
+                console.log('Submitting financial request:', surveyData);
+
+                // Send to financial requests API
+                const response = await fetch('https://mnjmoney-be.onrender.com/api/financial-requests', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        name: fullName || 'Survey User',
-                        email: email || `survey-${phone}@mnjmoney.com`,
-                        message: `SURVEY SUBMISSION - Name: ${fullName}, Phone: ${phone}, Email: ${email}, Employment: ${employmentStatus}, Type: ${employmentType}, Service Interest: ${servicesInterest}, Language: ${preferredLanguage}`
-                    })
+                    body: JSON.stringify(surveyData)
                 });
                 
-                const result = await response.json();
+                console.log('Response status:', response.status);
                 
-                if (response.ok) {
+                if (!response.ok) {
+                    let errorMessage = `Server error: ${response.status}`;
+                    try {
+                        const errorData = await response.json();
+                        errorMessage = errorData.detail || errorMessage;
+                    } catch (e) {
+                        errorMessage = response.statusText || errorMessage;
+                    }
+                    throw new Error(errorMessage);
+                }
+
+                const result = await response.json();
+                console.log('Success response:', result);
+                
+                if (result.success) {
                     // Show thank you step
                     document.getElementById('step4').style.display = 'none';
                     document.getElementById('thankYouStep').style.display = 'block';
                 } else {
-                    alert(result.detail || getTranslation('form.error'));
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
+                    throw new Error(result.detail || 'Failed to submit survey');
                 }
                 
             } catch (error) {
-                console.error('Error:', error);
-                alert(getTranslation('form.networkError'));
+                console.error('Error submitting survey:', error);
+                if (error.message.includes('Failed to fetch')) {
+                    alert('Network error: Cannot connect to server. Please check your internet connection.');
+                } else if (error.message.includes('503')) {
+                    alert('Server is temporarily unavailable. Please try again in a few moments.');
+                } else {
+                    alert(`Error: ${error.message}`);
+                }
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
             }
         }
     });
 
-    function validateStep(step) {
-        // Add validation logic for each step
-        // For now, just return true
-        return true;
+    // Enhanced survey step validation
+    function validateSurveyStep(step) {
+        switch(step) {
+            case 1:
+                const step1Selected = document.querySelector('#step1 .option-btn.selected') !== null;
+                if (!step1Selected) {
+                    alert('Please select your employment status to continue.');
+                }
+                return step1Selected;
+                
+            case 2:
+                const step2Selected = document.querySelector('#step2 .option-btn.selected') !== null;
+                if (!step2Selected) {
+                    alert('Please select your employment type to continue.');
+                }
+                return step2Selected;
+                
+            case 3:
+                const step3Selections = document.querySelectorAll('#step3 .option-btn.selected');
+                const step3Valid = step3Selections.length === 2;
+                if (!step3Valid) {
+                    alert('Please answer both questions about your documents and financial history.');
+                }
+                return step3Valid;
+                
+            case 4:
+                const step4Selections = document.querySelectorAll('#step4 .option-btn.selected');
+                const contactFields = document.querySelectorAll('#surveyContactForm input');
+                const step4Valid = step4Selections.length === 2 && 
+                               Array.from(contactFields).every(input => input.value.trim() !== '');
+                
+                if (!step4Valid) {
+                    if (step4Selections.length < 2) {
+                        alert('Please select both your service interest and preferred language.');
+                    } else {
+                        alert('Please fill in all contact information fields.');
+                    }
+                }
+                return step4Valid;
+                
+            default:
+                return true;
+        }
     }
 
     // Option button selection
@@ -379,6 +450,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 b.classList.remove('selected');
             });
             this.classList.add('selected');
+            
+            // Auto-advance to next step if this is step 1 or 2 with single questions
+            if (parent.id === 'step1' || parent.id === 'step2') {
+                setTimeout(() => {
+                    if (parent.id === 'step1') {
+                        document.getElementById('nextStep1').click();
+                    } else if (parent.id === 'step2') {
+                        document.getElementById('nextStep2').click();
+                    }
+                }, 500);
+            }
         });
     });
 
@@ -548,4 +630,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize video section
     initVideoSection();
+
+    // WhatsApp floating button animation
+    const whatsappFloat = document.getElementById('whatsappFloat');
+    if (whatsappFloat) {
+        setTimeout(() => {
+            whatsappFloat.classList.add('animate-pulse');
+        }, 2000);
+    }
 });
