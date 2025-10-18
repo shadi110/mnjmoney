@@ -132,6 +132,7 @@ async function loadFinancialRequests(page = 1, search = '') {
     }
 }
 
+
 async function showContactRequests() {
     const container = document.getElementById('tablesContainer');
     if (!container) return;
@@ -150,6 +151,7 @@ async function showContactRequests() {
             <div class="search-box">
                 <span class="search-icon">🔍</span>
                 <input type="text" id="contactSearch" placeholder="Search contacts..." onkeyup="handleContactSearch(event)">
+                <button class="search-button" onclick="handleContactSearch(event)">Search</button>
             </div>
         </div>
         
@@ -195,7 +197,6 @@ async function showContactRequests() {
     `;
     container.style.display = 'block';
 }
-
 async function showFinancialRequests() {
     const container = document.getElementById('tablesContainer');
     if (!container) return;
@@ -214,6 +215,7 @@ async function showFinancialRequests() {
             <div class="search-box">
                 <span class="search-icon">🔍</span>
                 <input type="text" id="financialSearch" placeholder="Search financial requests..." onkeyup="handleFinancialSearch(event)">
+                <button class="search-button" onclick="handleFinancialSearch(event)">Search</button>
             </div>
         </div>
         
@@ -265,7 +267,6 @@ async function showFinancialRequests() {
     `;
     container.style.display = 'block';
 }
-
 async function changeContactPage(page) {
     if (page < 1) return;
     
@@ -374,16 +375,16 @@ async function changeFinancialPage(page) {
 }
 
 function handleContactSearch(event) {
-    if (event.key === 'Enter') {
-        contactSearchTerm = event.target.value;
+    if (event.key === 'Enter' || event.type === 'click') {
+        contactSearchTerm = document.getElementById('contactSearch').value;
         currentContactPage = 1;
         changeContactPage(1);
     }
 }
 
 function handleFinancialSearch(event) {
-    if (event.key === 'Enter') {
-        financialSearchTerm = event.target.value;
+    if (event.key === 'Enter' || event.type === 'click') {
+        financialSearchTerm = document.getElementById('financialSearch').value;
         currentFinancialPage = 1;
         changeFinancialPage(1);
     }
