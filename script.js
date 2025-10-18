@@ -497,8 +497,8 @@ document.addEventListener('DOMContentLoaded', function() {
             
         default:
             return true;
-    }
-}
+}}}
+
     // Option button selection
     document.querySelectorAll('.option-btn').forEach(btn => {
         btn.addEventListener('click', function() {
