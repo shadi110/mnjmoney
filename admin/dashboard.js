@@ -146,10 +146,11 @@ async function showContactRequests() {
     const result = await loadContactRequests(currentContactPage);
     
     container.innerHTML = `
-        <a href="#" class="back-to-dashboard" onclick="hideTables()">
-            <i class="fas fa-arrow-left"></i> Back to Dashboard
-        </a>
-        <h2>Contact Us Requests (${result.total})</h2>
+        <button class="back-to-dashboard-btn" onclick="hideTables()">
+			<i class="fas fa-arrow-left"></i> Back to Dashboard
+		</button>
+		<div style="margin-bottom: 30px;"></div> <!-- Added space -->
+		<h2>Contact Us Requests (${result.total})</h2>
         
         <div class="table-controls">
             <div class="search-box">
