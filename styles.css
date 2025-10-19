@@ -1758,3 +1758,22 @@ footer {
 .video-wrapper.playing .video-overlay {
   display: none;
 }
+
+/* --- Video Info Section --- */
+.video-info {
+    padding: 20px;
+    margin: 0;
+}
+
+.video-info h3 {
+    margin-bottom: 12px;
+    font-size: 1.3rem;
+    color: var(--primary);
+    line-height: 1.4;
+}
+
+.video-info p {
+    color: var(--text-light);
+    line-height: 1.5;
+    margin: 0;
+}
