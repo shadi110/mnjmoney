@@ -1461,12 +1461,7 @@ footer {
     background: #545b62;
 }
 
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    margin-bottom: 50px;
-}
+
 .services-grid .service-card:nth-child(4) {
     grid-column: 1 / 4; /* This makes it span all 3 columns */
 	justify-self: center;
