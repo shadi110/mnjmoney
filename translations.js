@@ -16,7 +16,7 @@ const translations = {
         'contact.phone': '+972 52-461-9009',
         'contact.email': 'office@ksafem-mnj.com',
 		'footer.followUs': 'Follow Us',
-		
+		'survey.documents': "Financial documents",
 		
 		"step1Error": 'Please select your employment status to continue.',
         "step2Error": 'Please select your employment type to continue.',
@@ -30,6 +30,10 @@ const translations = {
         "hero.btnFreeCheck": "Start Your Free Check Now",
         "hero.btnSurvey": "Quick Verification Survey (90 seconds)",
         
+		
+		'survey.contactInfo': "Contact information",
+		'survey.contactDetails' : 'Your contact information details',
+		
         // Why Choose MNJ Section
         "whyChoose.title": "Why is it better to choose MNJ?",
         "whyChoose.subtitle": "At MNJ, we don't just provide a service; we build trust and a genuine partnership with our clients. Our team is highly professional and has extensive experience in tax refunds and collecting full financial dues with transparency, speed, and high professionalism.",
@@ -175,7 +179,7 @@ const translations = {
         "survey.fullName": "Full Name",
         "survey.phone": "Phone Number",
         "survey.email": "Email Address",
-        "survey.submit": "Submit Request | We'll get back to you within 4 working hours",
+        "survey.submit": "Submit | Will get back to you within 4 working hours",
         "survey.thankYou": "Thank You!",
         "survey.thankYouMsg": "Your request has been received! Our team will contact you as soon as possible.",
         "survey.whatsappMsg": "You can message us immediately on WhatsApp to speed up the check.",
@@ -206,13 +210,15 @@ const translations = {
         'contact.phone': ' +972 52-461-9009 ',
         'contact.email': ' office@ksafem-mnj.com ',
 		'footer.followUs': 'تابعونا',
-        
+        'survey.documents': "المستندات المالية",
         // Hero Section
         "hero.title": "استرجع أموالك الضائعة... بخطوة واحدة!",
         "hero.subtitle": "كثير من الناس يخسرون أموالهم بدون علم - ضرائب زائدة، أموال نائمة، أو حقوق مالية لم يخبرهم عنها أحد. نحن هنا لاستعادة حقوقك بسهولة وشفافية.",
         "hero.btnFreeCheck": "ابدأ الفحص المجاني الآن",
         "hero.btnSurvey": "استبيان التحقق السريع (90 ثانية)",
         
+		'survey.contactDetails' : 'تفاصيل الاتصال الخاصة بك',
+		
         // Why Choose MNJ Section
         "whyChoose.title": "لماذا من الأفضل اختيار MNJ؟",
         "whyChoose.subtitle": "في MNJ، نحن لا نقدم خدمة فقط؛ نحن نبني الثقة وشراكة حقيقية مع عملائنا. فريقنا محترف للغاية وله خبرة واسعة في استرداد الضرائب وجمع المستحقات المالية الكاملة بشفافية وسرعة واحترافية عالية.",
@@ -267,6 +273,9 @@ const translations = {
         "achievements.complexCase": "حل حالة معقدة",
         "achievements.complexCaseDesc": "نجحنا في التعامل مع حالة معقدة لاسترجاع 22,500 دولار لعمل لديه مصادر دخل متعددة.",
         
+		
+		'survey.contactInfo': "معلومات الاتصال",
+		
         // Testimonials
         "testimonials.title": "قصص نجاح العملاء",
         "testimonials.subtitle": "شاهد ما يقوله عملاؤنا عن تجربتهم معنا",
@@ -457,6 +466,10 @@ const translations = {
         "achievements.complexCase": "פתרון מקרה מורכב",
         "achievements.complexCaseDesc": "הצלחנו לנווט מקרה מורכב כדי להחזיר 22,500$ ללקוח עם מספר מקורות הכנסה.",
         
+		
+		'survey.documents': "מסמכים פיננסיים",
+		'survey.contactInfo': "פרטי קשר",
+		
         // Testimonials
         "testimonials.title": "סיפורי הצלחה של לקוחות",
         "testimonials.subtitle": "ראה מה הלקוחות שלנו אומרים על החוויה שלהם איתנו",
@@ -498,6 +511,8 @@ const translations = {
         "step4SelectionError": 'אנא בחר גם את השירות שמעניין אותך וגם את השפה המועדפת.',
         "step4ContactError": 'אנא מלא את כל שדות פרטי הקשר.',
         
+		'survey.contactDetails':'פרטי הקשר שלך',
+		
         // Contact Section
         "contact.title": "צור קשר",
         "contact.subtitle": "צור קשר עם הצוות שלנו כדי להתחיל להחזיר את הכסף שלך",
