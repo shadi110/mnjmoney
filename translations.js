@@ -235,8 +235,8 @@ const translations = {
         "whyChoose.lowCommission": "عمولة منخفضة",
         "whyChoose.lowCommissionDesc": "نقدم لك عمولة منخفضة مقابل أفضل خدمة",
         
-		'contact.familyName' : '* اسم العائلة',
-		"contact.givenName" : '* الاسم الأول',
+		'contact.familyName' : 'اسم العائلة *',
+		"contact.givenName" : 'الاسم الأول *',
 		
         // Services Section
         "services.title": "خدماتنا",
@@ -472,8 +472,8 @@ const translations = {
         "achievements.complexCaseDesc": "הצלחנו לנווט מקרה מורכב כדי להחזיר 22,500$ ללקוח עם מספר מקורות הכנסה.",
         
 		
-		'contact.familyName' : '* שם משפחה',
-		"contact.givenName" : '* שם פרטי',
+		'contact.familyName' : 'שם משפחה *',
+		"contact.givenName" : 'שם פרטי *',
 		
 		
 		'survey.documents': "מסמכים פיננסיים",
