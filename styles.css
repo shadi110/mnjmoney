@@ -122,17 +122,45 @@ body[lang="en"] {
     direction: rtl;
 }
 
-[dir="rtl"] .survey-navigation {
+/* Survey Navigation Buttons - High Specificity RTL/LTR Support */
+.modal-content .survey-navigation {
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
     gap: 15px;
+    margin-top: 30px;
 }
 
-[dir="ltr"] .survey-navigation {
-    display: flex;
+/* LTR (English) - Previous on left, Next on right */
+[dir="ltr"] .modal-content .survey-navigation {
+    flex-direction: row;
     justify-content: space-between;
-    gap: 15px;
+}
+
+[dir="ltr"] .modal-content .survey-navigation .btn:first-child {
+    order: 1; /* Previous button */
+}
+
+[dir="ltr"] .modal-content .survey-navigation .btn:last-child {
+    order: 2; /* Next button */
+}
+
+/* RTL (Arabic/Hebrew) - Next on left, Previous on right */
+[dir="rtl"] .modal-content .survey-navigation {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+[dir="rtl"] .modal-content .survey-navigation .btn:first-child {
+    order: 2; /* Previous button moves to right */
+}
+
+[dir="rtl"] .modal-content .survey-navigation .btn:last-child {
+    order: 1; /* Next button moves to left */
+}
+
+/* Ensure buttons have consistent width */
+.modal-content .survey-navigation .btn {
+    min-width: 120px;
+    flex: 0 0 auto;
 }
 
 [dir="rtl"] .faq-question {
