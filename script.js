@@ -381,9 +381,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     preferred_language: document.querySelectorAll('#step4 .option-btn.selected')[1]?.dataset.value || '',
 
                     // Contact Information
-                    full_name: document.querySelector('#surveyContactForm input[placeholder*="Name"]')?.value || '',
-                    phone_number: document.querySelector('#surveyContactForm input[placeholder*="Phone"]')?.value || '',
-                    email_address: document.querySelector('#surveyContactForm input[placeholder*="Email"]')?.value || ''
+                    name: document.querySelector('#surveyContactForm input[placeholder*="Name"]')?.value || '',
+                    phone: document.querySelector('#surveyContactForm input[placeholder*="Phone"]')?.value || '',
+                    email: document.querySelector('#surveyContactForm input[placeholder*="Email"]')?.value || ''
                 };
 
                 // Validate all fields are filled
