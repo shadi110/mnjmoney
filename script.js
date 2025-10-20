@@ -222,21 +222,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Reset form
         document.getElementById('surveyContactForm').reset();
 
-        // HIDE THE THANK YOU MESSAGE AND SHOW ALL STEPS PROPERLY
+        // Hide thank you message
         document.getElementById('thankYouStep').style.display = 'none';
-        
-        // Show step 1 and hide all other steps
-        steps.forEach((step, index) => {
-            if (index === 0) {
-                step.style.display = 'block';
-            } else {
-                step.style.display = 'none';
-            }
-        });
-        
-        // Make sure step 1 is active
-        steps.forEach(step => step.classList.remove('active'));
-        steps[0].classList.add('active');
     }
 
     function updateSurveyProgress() {
