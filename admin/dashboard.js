@@ -186,24 +186,17 @@ async function showContactRequests() {
     // Hide dashboard cards
     document.querySelector('.dashboard-grid').style.display = 'none';
     
-    // Reset to first page when showing contacts
-    currentContactPage = 1;
-    contactSearchTerm = '';
-    
-    const result = await loadContactRequests(currentContactPage);
-    
+    // Show skeleton loading
     container.innerHTML = `
         <button class="back-to-dashboard-btn" onclick="hideTables()">
             <i class="fas fa-arrow-left"></i> Back to Dashboard
         </button>
-        <div style="margin-bottom: 30px;"></div> <!-- Added space -->
-        <h2>Contact Us Requests (${result.total})</h2>
+        <div style="margin-bottom: 30px;"></div>
+        <h2><div class="skeleton skeleton-title"></div></h2>
         
         <div class="table-controls">
             <div class="search-box">
-                <span class="search-icon"><i class="fas fa-search"></i></span>
-                <input type="text" id="contactSearch" placeholder="Search contacts..." onkeyup="handleContactSearch(event)" value="${contactSearchTerm}">
-                <button class="search-button" onclick="handleContactSearch(event)">Search</button>
+                <div class="skeleton skeleton-search"></div>
             </div>
         </div>
         
@@ -211,54 +204,28 @@ async function showContactRequests() {
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>ID Number</th>
-                        <th>Area</th>
-                        <th>Date</th>
-                        <th>Actions</th>
+                        ${Array(7).fill().map(() => `<th><div class="skeleton skeleton-header"></div></th>`).join('')}
                     </tr>
                 </thead>
                 <tbody>
-                    ${result.data.length > 0 ? result.data.map(request => `
+                    ${Array(5).fill().map(() => `
                         <tr>
-                            <td>${request.id}</td>
-                            <td>${escapeHtml(request.name)}</td>
-                            <td>${extractPhoneFromMessage(request.message) || 'N/A'}</td>
-                            <td>${extractIdNumberFromMessage(request.message) || 'N/A'}</td>
-                            <td>${extractAreaFromMessage(request.message) || 'N/A'}</td>
-                            <td>${formatDate(request.created_at)}</td>
-                            <td>
-                                <button class="btn-small" onclick="viewContact(${request.id})">View</button>
-                                <button class="btn-small btn-danger" onclick="deleteContact(${request.id})">Delete</button>
-                            </td>
+                            ${Array(7).fill().map(() => `<td><div class="skeleton skeleton-cell"></div></td>`).join('')}
                         </tr>
-                    `).join('') : `
-                        <tr>
-                            <td colspan="7" style="text-align: center; padding: 20px;">No contact requests found</td>
-                        </tr>
-                    `}
+                    `).join('')}
                 </tbody>
             </table>
         </div>
-        
-        ${result.total > 0 ? `
-        <div class="pagination">
-            <button onclick="changeContactPage(${currentContactPage - 1})" ${currentContactPage <= 1 ? 'disabled' : ''}>
-                <i class="fas fa-chevron-left"></i> Previous
-            </button>
-            <span class="page-info">Page ${currentContactPage} of ${Math.ceil(result.total / rowsPerPage)}</span>
-            <button onclick="changeContactPage(${currentContactPage + 1})" ${!result.hasNext ? 'disabled' : ''}>
-                Next <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
-        ` : ''}
     `;
     container.style.display = 'block';
-	container.style.background = 'white';
+    container.style.background = 'white';
+    
+    // Load data
+    const result = await loadContactRequests(currentContactPage);
+    
+    // Replace with actual content (same as Option 1)
+    updateContactTable(result);
 }
-
 async function showFinancialRequests() {
     const container = document.getElementById('tablesContainer');
     if (!container) return;
