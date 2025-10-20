@@ -230,6 +230,7 @@ async function showContactRequests() {
         ` : ''}
     `;
     container.style.display = 'block';
+	container.style.background = 'white';
 }
 
 async function showFinancialRequests() {
@@ -313,6 +314,7 @@ async function showFinancialRequests() {
         ` : ''}
     `;
     container.style.display = 'block';
+	container.style.background = 'white';
 }
 
 async function changeContactPage(page) {
