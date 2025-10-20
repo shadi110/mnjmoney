@@ -193,9 +193,9 @@ async function showContactRequests() {
     
     // Show loading state immediately
     container.innerHTML = `
-        <button class="back-to-dashboard-btn" onclick="hideTables()">
+        <a href="javascript:void(0)" class="back-to-dashboard-link" onclick="hideTables()">
             <i class="fas fa-arrow-left"></i> Back to Dashboard
-        </button>
+        </a>
         <div style="margin-bottom: 30px;"></div>
         <h2>Contact Us Requests <span style="color: #666;">(Loading...)</span></h2>
         
@@ -241,9 +241,9 @@ async function showContactRequests() {
         // Update with actual data
         container.innerHTML = `
             <a href="javascript:void(0)" class="back-to-dashboard-link" onclick="hideTables()">
-				<i class="fas fa-arrow-left"></i> Back to Dashboard
-			</a>
-			<div style="margin-bottom: 30px;"></div>
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+            <div style="margin-bottom: 30px;"></div>
             <h2>Contact Us Requests (${result.total})</h2>
             
             <div class="table-controls">
@@ -306,9 +306,9 @@ async function showContactRequests() {
         console.error('Error loading contact requests:', error);
         // Show error state
         container.innerHTML = `
-            <button class="back-to-dashboard-btn" onclick="hideTables()">
+            <a href="javascript:void(0)" class="back-to-dashboard-link" onclick="hideTables()">
                 <i class="fas fa-arrow-left"></i> Back to Dashboard
-            </button>
+            </a>
             <div style="margin-bottom: 30px;"></div>
             <h2>Contact Us Requests</h2>
             <div style="text-align: center; padding: 40px; color: #dc3545;">
@@ -319,6 +319,7 @@ async function showContactRequests() {
         `;
     }
 }
+
 async function showFinancialRequests() {
     const container = document.getElementById('tablesContainer');
     if (!container) return;
@@ -329,9 +330,9 @@ async function showFinancialRequests() {
     // Show loading state immediately
     container.innerHTML = `
         <a href="javascript:void(0)" class="back-to-dashboard-link" onclick="hideTables()">
-				<i class="fas fa-arrow-left"></i> Back to Dashboard
-			</a>
-			<div style="margin-bottom: 30px;"></div>
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+        <div style="margin-bottom: 30px;"></div>
         <h2>Financial Requests <span style="color: #666;">(Loading...)</span></h2>
         
         <div class="table-controls">
@@ -380,9 +381,9 @@ async function showFinancialRequests() {
         
         // Update with actual data
         container.innerHTML = `
-            <button class="back-to-dashboard-btn" onclick="hideTables()">
+            <a href="javascript:void(0)" class="back-to-dashboard-link" onclick="hideTables()">
                 <i class="fas fa-arrow-left"></i> Back to Dashboard
-            </button>
+            </a>
             <div style="margin-bottom: 30px;"></div>
             <h2>Financial Requests (${result.total})</h2>
             
@@ -450,9 +451,9 @@ async function showFinancialRequests() {
         console.error('Error loading financial requests:', error);
         // Show error state
         container.innerHTML = `
-            <button class="back-to-dashboard-btn" onclick="hideTables()">
+            <a href="javascript:void(0)" class="back-to-dashboard-link" onclick="hideTables()">
                 <i class="fas fa-arrow-left"></i> Back to Dashboard
-            </button>
+            </a>
             <div style="margin-bottom: 30px;"></div>
             <h2>Financial Requests</h2>
             <div style="text-align: center; padding: 40px; color: #dc3545;">
@@ -463,6 +464,7 @@ async function showFinancialRequests() {
         `;
     }
 }
+
 async function changeContactPage(page) {
     if (page < 1) return;
     
