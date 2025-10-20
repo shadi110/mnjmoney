@@ -227,10 +227,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateSurveyProgress() {
-        // Update step visibility
-        steps.forEach((step, index) => {
-            step.classList.toggle('active', index === currentStep);
+        // Hide all steps first
+        steps.forEach(step => {
+            step.style.display = 'none';
         });
+        
+        // Show only the current active step
+        steps[currentStep].style.display = 'block';
 
         // Update progress bar
         const progress = (currentStep / (steps.length - 1)) * 100;
