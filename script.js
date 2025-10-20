@@ -224,6 +224,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Hide thank you message
         document.getElementById('thankYouStep').style.display = 'none';
+		
+		const submitBtn = document.getElementById('submitSurvey');
+        submitBtn.textContent = getTranslation('survey.submit');
+        submitBtn.disabled = false;
     }
 
     function updateSurveyProgress() {
