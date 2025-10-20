@@ -1,6 +1,6 @@
 /* Login Styles */
 .login-container {
-    background: linear-gradient(ebd19a, #daa851 0%, #e8c267 100%);
+    background: #ebd19a;
     min-height: 100vh;
     display: flex;
     justify-content: center;
