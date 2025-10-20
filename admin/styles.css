@@ -935,9 +935,10 @@ header h1 {
 }
 
 .logo-image {
-    height: 50px;
+    height: 70px;
     width: auto;
     transition: transform 0.3s ease;
+	filter: brightness(0) invert(1);
 }
 
 .logo-image:hover {
@@ -952,7 +953,7 @@ header h1 {
     }
     
     .logo-image {
-        height: 40px;
+        height: 60px;
     }
 }
 
@@ -963,6 +964,6 @@ header h1 {
     }
     
     .logo-image {
-        height: 35px;
+        height: 50px;
     }
 }
