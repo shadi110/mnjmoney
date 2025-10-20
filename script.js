@@ -221,6 +221,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Reset form
         document.getElementById('surveyContactForm').reset();
+		
+		document.getElementById('thankYouStep').style.display = 'none';
+        document.getElementById('step1').style.display = 'block';
     }
 
     function updateSurveyProgress() {
