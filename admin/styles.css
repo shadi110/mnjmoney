@@ -936,7 +936,6 @@ header h1 {
     height: 80px; /* Bigger size */
     width: auto;
     transition: transform 0.3s ease;
-    filter: brightness(0) invert(1); /* Makes logo white */
 }
 
 .logo-image:hover {
