@@ -17,6 +17,8 @@ const translations = {
         'contact.email': 'office@ksafem-mnj.com',
 		'footer.followUs': 'Follow Us',
 		'survey.documents': "Financial documents",
+		'contact.familyName' : 'Family Name',
+		"contact.givenName" : 'First Name',
 		
 		"step1Error": 'Please select your employment status to continue.',
         "step2Error": 'Please select your employment type to continue.',
@@ -233,6 +235,9 @@ const translations = {
         "whyChoose.lowCommission": "عمولة منخفضة",
         "whyChoose.lowCommissionDesc": "نقدم لك عمولة منخفضة مقابل أفضل خدمة",
         
+		'contact.familyName' : 'اسم العائلة',
+		"contact.givenName" : 'الاسم الأول',
+		
         // Services Section
         "services.title": "خدماتنا",
         "services.subtitle": "نساعد الأفراد على استرجاع حقوقهم المالية - من ضرائب، صناديق تقاعد، وأموال مفقودة.",
@@ -466,6 +471,10 @@ const translations = {
         "achievements.complexCase": "פתרון מקרה מורכב",
         "achievements.complexCaseDesc": "הצלחנו לנווט מקרה מורכב כדי להחזיר 22,500$ ללקוח עם מספר מקורות הכנסה.",
         
+		
+		'contact.familyName' : 'שם משפחה',
+		"contact.givenName" : 'שם פרטי',
+		
 		
 		'survey.documents': "מסמכים פיננסיים",
 		'survey.contactInfo': "פרטי קשר",
