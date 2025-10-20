@@ -597,9 +597,9 @@ header h1 {
 
 .search-button {
     padding: 12px 25px !important;
-    background: #daa851 !important;
+    background: #ebd19a !important;
     color: white !important;
-    border: 2px solid #daa851 !important;
+    border: 2px solid #ebd19a !important;
     border-radius: 0 6px 6px 0 !important;
     cursor: pointer;
     font-size: 1rem;
@@ -636,7 +636,7 @@ header h1 {
 
 /* FIXED: Table headers with proper colors */
 .data-table th {
-    background: #daa851 !important;
+    background: #ebd19a !important;
     color: white !important;
     font-weight: 500;
     border-bottom: 3px solid black;
@@ -891,7 +891,7 @@ header h1 {
     position: absolute;
     top: -25px;
     right: 10px;
-    background: #daa851;
+    background: #ebd19a;
     color: white;
     padding: 4px 8px;
     border-radius: 4px;
