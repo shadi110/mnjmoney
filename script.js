@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Debug: Check if translations are loaded
     console.log('Translations loaded:', typeof translations !== 'undefined');
     console.log('Available languages:', translations ? Object.keys(translations) : 'none');
-    
+
     // Set Arabic as default
     let currentLang = 'ar';
     document.documentElement.setAttribute('lang', 'ar');
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to switch language
     function switchLanguage(lang) {
         currentLang = lang;
-        
+
         // Update active button
         languageButtons.forEach(btn => {
             btn.classList.remove('active');
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 btn.classList.add('active');
             }
         });
-        
+
         // Update HTML lang attribute and direction
         document.documentElement.setAttribute('lang', lang);
         if (lang === 'ar' || lang === 'he') {
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             document.body.setAttribute('dir', 'ltr');
         }
-        
+
         // Translate all elements with data-key attribute
         const translatableElements = document.querySelectorAll('[data-key]');
         translatableElements.forEach(element => {
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
-        
+
         updateSurveyNavigationText();
         // Save language preference
         localStorage.setItem('preferred-language', lang);
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // FAQ Accordion
     const faqQuestions = document.querySelectorAll('.faq-question');
-    
+
     faqQuestions.forEach(question => {
         question.addEventListener('click', function() {
             const faqItem = this.parentElement;
@@ -154,15 +154,15 @@ document.addEventListener('DOMContentLoaded', function() {
         currentImageIndex = (currentImageIndex + 1) % totalImages;
         updateLightboxImage();
     }
-    
+
     function updateSurveyNavigationText() {
         const nextButtons = document.querySelectorAll('.next-btn');
         const prevButtons = document.querySelectorAll('.prev-btn');
-    
+
         nextButtons.forEach(btn => {
             btn.textContent = getTranslation('survey.next');
         });
-    
+
         prevButtons.forEach(btn => {
             btn.textContent = getTranslation('survey.previous');
         });
@@ -213,12 +213,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function resetSurvey() {
         currentStep = 0;
         updateSurveyProgress();
-        
+
         // Reset all option selections
         document.querySelectorAll('.option-btn').forEach(btn => {
             btn.classList.remove('selected');
         });
-        
+
         // Reset form
         document.getElementById('surveyContactForm').reset();
     }
@@ -228,11 +228,11 @@ document.addEventListener('DOMContentLoaded', function() {
         steps.forEach((step, index) => {
             step.classList.toggle('active', index === currentStep);
         });
-        
+
         // Update progress bar
         const progress = (currentStep / (steps.length - 1)) * 100;
         progressBar.style.width = progress + '%';
-        
+
         // Update step indicators
         stepIndicators.forEach((indicator, index) => {
             indicator.classList.toggle('active', index <= currentStep);
@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (contactForm) {
         contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             // Get form data
             const firstName = document.getElementById('firstName').value;
             const lastName = document.getElementById('lastName').value;
@@ -309,13 +309,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const idNumber = document.getElementById('idNumber').value;
             const area = document.getElementById('area').value;
             const message = document.getElementById('message').value;
-            
+
             // Basic validation
             if (!firstName || !lastName || !phone || !idNumber || !area) {
                 alert(getTranslation('form.requiredFields'));
                 return;
             }
-            
+
             // Show loading state
             const submitBtn = contactForm.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
@@ -334,9 +334,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         message: `Phone: ${phone}, ID: ${idNumber}, Area: ${area}, Message: ${message || 'No message provided'}`
                     })
                 });
-                
+
                 const result = await response.json();
-                
+
                 if (response.ok) {
                     alert(getTranslation('form.success'));
                     contactForm.reset();
@@ -358,7 +358,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (validateSurveyStep(4)) {
             const submitBtn = this;
             const originalText = submitBtn.textContent;
-            
+
             // Show loading state
             submitBtn.textContent = getTranslation('form.sending');
             submitBtn.disabled = true;
@@ -368,18 +368,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 const surveyData = {
                     // Step 1: Employment Status
                     employment_status: document.querySelector('#step1 .option-btn.selected')?.dataset.value || '',
-                    
+
                     // Step 2: Employment Type
                     employment_type: document.querySelector('#step2 .option-btn.selected')?.dataset.value || '',
-                    
+
                     // Step 3: Documents & History
                     has_pay_slips: document.querySelectorAll('#step3 .option-btn.selected')[0]?.dataset.value || '',
                     previous_funds_history: document.querySelectorAll('#step3 .option-btn.selected')[1]?.dataset.value || '',
-                    
+
                     // Step 4: Services & Contact
                     service_interest: document.querySelectorAll('#step4 .option-btn.selected')[0]?.dataset.value || '',
                     preferred_language: document.querySelectorAll('#step4 .option-btn.selected')[1]?.dataset.value || '',
-                    
+
                     // Contact Information
                     full_name: document.querySelector('#surveyContactForm input[placeholder*="Name"]')?.value || '',
                     phone_number: document.querySelector('#surveyContactForm input[placeholder*="Phone"]')?.value || '',
@@ -405,9 +405,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     },
                     body: JSON.stringify(surveyData)
                 });
-                
+
                 console.log('Response status:', response.status);
-                
+
                 if (!response.ok) {
                     let errorMessage = `Server error: ${response.status}`;
                     try {
@@ -421,7 +421,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const result = await response.json();
                 console.log('Success response:', result);
-                
+
                 if (result.success) {
                     // Show thank you step
                     document.getElementById('step4').style.display = 'none';
@@ -429,7 +429,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     throw new Error(result.detail || 'Failed to submit survey');
                 }
-                
+
             } catch (error) {
                 console.error('Error submitting survey:', error);
                 if (error.message.includes('Failed to fetch')) {
@@ -451,13 +451,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Check if language is stored in localStorage
             const storedLang = localStorage.getItem('preferred-language');
             if (storedLang) return storedLang;
-            
+
             // Check active language button
             const activeLangBtn = document.querySelector('.language-btn.active');
             if (activeLangBtn) {
                 return activeLangBtn.getAttribute('data-lang');
             }
-            
+
             // Default to Arabic
             return 'ar';
         }
@@ -471,14 +471,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     alert(translations[currentLang].step1Error);
                 }
                 return step1Selected;
-                
+
             case 2:
                 const step2Selected = document.querySelector('#step2 .option-btn.selected') !== null;
                 if (!step2Selected) {
                     alert(translations[currentLang].step2Error);
                 }
                 return step2Selected;
-                
+
             case 3:
                 const step3Selections = document.querySelectorAll('#step3 .option-btn.selected');
                 const step3Valid = step3Selections.length === 2;
@@ -486,13 +486,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     alert(translations[currentLang].step3Error);
                 }
                 return step3Valid;
-                
+
             case 4:
                 const step4Selections = document.querySelectorAll('#step4 .option-btn.selected');
                 const contactFields = document.querySelectorAll('#surveyContactForm input');
                 const step4Valid = step4Selections.length === 2 && 
                                Array.from(contactFields).every(input => input.value.trim() !== '');
-                
+
                 if (!step4Valid) {
                     if (step4Selections.length < 2) {
                         alert(translations[currentLang].step4SelectionError);
@@ -501,7 +501,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
                 return step4Valid;
-                
+
             default:
                 return true;
         }
@@ -515,7 +515,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 b.classList.remove('selected');
             });
             this.classList.add('selected');
-            
+
             // Auto-advance to next step if this is step 1 or 2 with single questions
             if (parent.id === 'step1' || parent.id === 'step2') {
                 setTimeout(() => {
@@ -544,7 +544,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     behavior: 'smooth',
                     block: 'start'
                 });
-                
+
                 // Close mobile menu if open
                 if (mainNav && mainNav.classList.contains('active')) {
                     mainNav.classList.remove('active');
@@ -567,12 +567,34 @@ document.addEventListener('DOMContentLoaded', function() {
             header.style.backdropFilter = 'none';
         }
     });
-    
+
     // Video Section Functionality
     function initVideoSection() {
+        const videoCards = document.querySelectorAll('.video-card');
         const videos = document.querySelectorAll('.customer-video');
         const playButtons = document.querySelectorAll('.play-btn');
         const videoWrappers = document.querySelectorAll('.video-wrapper');
+
+        // Animate video cards on scroll
+        const observerOptions = {
+            threshold: 0.3,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('animate-in');
+                    }, parseInt(entry.target.dataset.delay || 0));
+                }
+            });
+        }, observerOptions);
+
+        videoCards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.2}s`;
+            observer.observe(card);
+        });
 
         // Play button functionality
         playButtons.forEach((button, index) => {
@@ -581,7 +603,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 e.stopPropagation();
                 const video = videos[index];
                 const wrapper = videoWrappers[index];
-                
+
                 if (video.paused) {
                     video.play().catch(error => {
                         console.error('Error playing video:', error);
@@ -692,13 +714,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize video section
     initVideoSection();
 
-    // WhatsApp floating button
+    // WhatsApp floating button animation
     const whatsappFloat = document.getElementById('whatsappFloat');
     if (whatsappFloat) {
-        // Keep only the essential WhatsApp functionality
-        console.log('WhatsApp button initialized');
+        setTimeout(() => {
+            whatsappFloat.classList.add('animate-pulse');
+        }, 2000);
     }
-
-    // Console log for debugging
-    console.log('All core functionality initialized successfully');
 });
