@@ -715,3 +715,212 @@ header h1 {
         padding: 8px 10px;
     }
 }
+
+/* Responsive Table Styles */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.data-table {
+    min-width: 800px; /* Minimum width before scrolling kicks in */
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+    .admin-container {
+        padding: 10px;
+    }
+    
+    header {
+        padding: 15px;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .dashboard-card {
+        padding: 20px;
+    }
+    
+    .tables-container {
+        padding: 15px;
+        margin: 10px 0;
+    }
+    
+    .table-controls {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .search-box {
+        max-width: 100%;
+    }
+    
+    .search-box input {
+        padding: 10px 10px 10px 40px;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .pagination {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .pagination button {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+    
+    .page-info {
+        margin: 10px 0;
+        width: 100%;
+        text-align: center;
+    }
+    
+    /* Mobile table cell styles */
+    .data-table th,
+    .data-table td {
+        padding: 10px 8px;
+        font-size: 14px;
+    }
+    
+    .btn-small {
+        padding: 6px 8px;
+        font-size: 12px;
+        margin: 1px;
+    }
+    
+    /* Back button mobile styling */
+    .back-to-dashboard-btn {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+    .admin-container {
+        padding: 5px;
+    }
+    
+    .tables-container {
+        padding: 10px;
+    }
+    
+    .data-table {
+        min-width: 900px; /* Slightly larger for very small screens */
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: 8px 6px;
+        font-size: 13px;
+    }
+    
+    .dashboard-card {
+        padding: 15px;
+    }
+    
+    .card-icon {
+        font-size: 1.5em;
+    }
+    
+    h2 {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+}
+
+/* Modal responsiveness */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        margin: 10px;
+        padding: 20px;
+    }
+    
+    .detail-section {
+        padding: 10px;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+    
+    .modal-actions .btn {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+/* Touch-friendly improvements */
+.btn-small, 
+.pagination button, 
+.search-button {
+    min-height: 44px; /* Minimum touch target size */
+    min-width: 44px;
+}
+
+.dashboard-card {
+    min-height: 120px; /* Better touch targets */
+}
+
+/* Horizontal scroll indicator for tables */
+.table-container {
+    position: relative;
+}
+
+.table-container::after {
+    content: "← Scroll →";
+    position: absolute;
+    top: -25px;
+    right: 10px;
+    background: #daa851;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .table-container::after {
+        display: block;
+    }
+}
+
+/* Improved mobile header */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .logout-btn {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+}
+
+/* Better mobile table actions */
+@media (max-width: 768px) {
+    .data-table td:last-child {
+        position: sticky;
+        right: 0;
+        background: white;
+        box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    }
+}

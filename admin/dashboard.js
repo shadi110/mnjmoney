@@ -7,6 +7,27 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'index.html';
         return;
     }
+	
+	const dashboardCards = document.querySelectorAll('.dashboard-card');
+    dashboardCards.forEach(card => {
+        card.addEventListener('touchstart', function() {
+            this.style.transform = 'translateY(-2px)';
+        });
+        
+        card.addEventListener('touchend', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+    
+    // Prevent zoom on double-tap for buttons
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+        button.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        });
+    });
     
     // User is authenticated, initialize dashboard
     initializeDashboard();
@@ -593,6 +614,70 @@ function viewFinancialRequest(requestId) {
         </div>
     `;
     document.body.appendChild(modal);
+}
+
+
+// Enhanced search for mobile
+function handleContactSearch(event) {
+    if (event.key === 'Enter' || event.type === 'click' || event.type === 'touchend') {
+        contactSearchTerm = document.getElementById('contactSearch').value;
+        currentContactPage = 1;
+        changeContactPage(1);
+        
+        // Hide mobile keyboard after search
+        if (window.innerWidth <= 768) {
+            document.getElementById('contactSearch').blur();
+        }
+    }
+}
+
+function handleFinancialSearch(event) {
+    if (event.key === 'Enter' || event.type === 'click' || event.type === 'touchend') {
+        financialSearchTerm = document.getElementById('financialSearch').value;
+        currentFinancialPage = 1;
+        changeFinancialPage(1);
+        
+        // Hide mobile keyboard after search
+        if (window.innerWidth <= 768) {
+            document.getElementById('financialSearch').blur();
+        }
+    }
+}
+
+// Mobile-optimized modal closing
+function closeModal(modal) {
+    modal.style.opacity = '0';
+    setTimeout(() => {
+        if (modal.parentElement) {
+            modal.parentElement.remove();
+        }
+    }, 300);
+}
+
+// Enhanced modal creation with mobile support
+function createMobileFriendlyModal(content) {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.style.opacity = '0';
+    modal.style.transition = 'opacity 0.3s ease';
+    
+    modal.innerHTML = content;
+    
+    // Add touch event for backdrop closing
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal(modal);
+        }
+    });
+    
+    document.body.appendChild(modal);
+    
+    // Trigger animation
+    setTimeout(() => {
+        modal.style.opacity = '1';
+    }, 10);
+    
+    return modal;
 }
 
 function formatYesNo(value) {
