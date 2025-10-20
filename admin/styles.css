@@ -45,13 +45,13 @@
 
 .form-group input:focus {
     outline: none;
-    border-color: #007bff;
+    border-color: black;
 }
 
 .login-btn {
     width: 100%;
     padding: 12px;
-    background: #007bff;
+    background: black;
     color: white;
     border: none;
     border-radius: 5px;
