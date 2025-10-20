@@ -949,13 +949,14 @@ header h1 {
 /* Loading animation styles */
 .loading-dots {
     display: inline-block;
-    color: #666;
+    color: white !important;
     font-size: 0.8em;
 }
 
 .loading-dots::after {
     content: '...';
     animation: dots 1.5s steps(5, end) infinite;
+	color: white !important;
 }
 
 @keyframes dots {

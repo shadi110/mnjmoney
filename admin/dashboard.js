@@ -240,10 +240,10 @@ async function showContactRequests() {
         
         // Update with actual data
         container.innerHTML = `
-            <button class="back-to-dashboard-btn" onclick="hideTables()">
-                <i class="fas fa-arrow-left"></i> Back to Dashboard
-            </button>
-            <div style="margin-bottom: 30px;"></div>
+            <a href="javascript:void(0)" class="back-to-dashboard-link" onclick="hideTables()">
+				<i class="fas fa-arrow-left"></i> Back to Dashboard
+			</a>
+			<div style="margin-bottom: 30px;"></div>
             <h2>Contact Us Requests (${result.total})</h2>
             
             <div class="table-controls">
@@ -328,10 +328,10 @@ async function showFinancialRequests() {
     
     // Show loading state immediately
     container.innerHTML = `
-        <button class="back-to-dashboard-btn" onclick="hideTables()">
-            <i class="fas fa-arrow-left"></i> Back to Dashboard
-        </button>
-        <div style="margin-bottom: 30px;"></div>
+        <a href="javascript:void(0)" class="back-to-dashboard-link" onclick="hideTables()">
+				<i class="fas fa-arrow-left"></i> Back to Dashboard
+			</a>
+			<div style="margin-bottom: 30px;"></div>
         <h2>Financial Requests <span style="color: #666;">(Loading...)</span></h2>
         
         <div class="table-controls">
