@@ -423,87 +423,88 @@
     </section>
 
     <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <div class="section-title">
-                <h2 data-key="contact.title">اتصل بنا</h2>
-                <p data-key="contact.subtitle">تواصل مع فريقنا لبدء استرداد أموالك</p>
-            </div>
-            
-            <div class="contact-container">
-                <div class="contact-info">
-                    <h3 data-key="contact.getInTouch">تواصل معنا</h3>
-                    <p data-key="contact.contactDesc">اتصل بنا اليوم واجعل استعادة حقوقك أسهل خطوة. فريقنا جاهز لمساعدتك في استرداد ما هو حق لك.</p>
-                    
-                    <div class="contact-details">
-    <div>
-        <i class="fas fa-map-marker-alt"></i>
-        <span data-key="contact.address1">الشارع الرئيسي يافة الناصرة, Yafa an-Nasirah, Israel</span>
-    </div>
-    <div>
-        <i class="fas fa-map-marker-alt"></i>
-        <span data-key="contact.address2">بيت حنينا ، بلدي مول</span>
-    </div>
-    <div>
-        <i class="fas fa-phone"></i>
-        <span>+972 52-461-9009</span>
-    </div>
-    <div>
-        <i class="fas fa-envelope"></i>
-        <span data-key="contact.email">office@ksafem-mnj.com</span>
-    </div>
-</div>
-                    
-                    <div class="footer-column social-column">
-    <h3 data-key="footer.followUs">تابعونا</h3>
-    <div class="social-links">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-    </div>
-</div>
+   <!-- Contact Section -->
+<section class="contact" id="contact">
+    <div class="container">
+        <div class="section-title">
+            <h2 data-key="contact.title">اتصل بنا</h2>
+            <p data-key="contact.subtitle">تواصل مع فريقنا لبدء استرداد أموالك</p>
+        </div>
+        
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3 data-key="contact.getInTouch">تواصل معنا</h3>
+                <p data-key="contact.contactDesc">اتصل بنا اليوم واجعل استعادة حقوقك أسهل خطوة. فريقنا جاهز لمساعدتك في استرداد ما هو حق لك.</p>
+                
+                <div class="contact-details">
+                    <div>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span data-key="contact.address1">الشارع الرئيسي يافة الناصرة, Yafa an-Nasirah, Israel</span>
+                    </div>
+                    <div>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span data-key="contact.address2">بيت حنينا ، بلدي مول</span>
+                    </div>
+                    <div>
+                        <i class="fas fa-phone"></i>
+                        <span>+972 52-461-9009</span>
+                    </div>
+                    <div>
+                        <i class="fas fa-envelope"></i>
+                        <span data-key="contact.email">office@ksafem-mnj.com</span>
+                    </div>
                 </div>
                 
-                <div class="contact-form">
-                    <h3 data-key="contact.sendMessage">أرسل لنا رسالة</h3>
-                    <form id="contactForm">
-                        <div class="name-fields">
-                            <div class="form-group">
-                                <label for="firstName" data-key="contact.firstName">الاسم الأول *</label>
-                                <input type="text" id="firstName" name="firstName" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="lastName" data-key="contact.lastName">اسم العائلة *</label>
-                                <input type="text" id="lastName" name="lastName" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="phone" data-key="contact.phone">رقم الهاتف *</label>
-                            <input type="tel" id="phone" name="phone" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="idNumber" data-key="contact.idNumber">رقم الهوية *</label>
-                            <input type="text" id="idNumber" name="idNumber" required>
-                        </div>
-						
-						<div class="form-group">
-                            <label for="area" data-key="contact.area">المنطقة *</label>
-                            <input type="text" id="area" name="area" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="message" data-key="contact.message">أرسل رسالة</label>
-                            <textarea id="message" name="message" rows="5" data-key="contact.messagePlaceholder" placeholder="أخبرنا عن وضعك..."></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-large" style="width: 100%;" data-key="contact.sendBtn">أرسل الرسالة</button>
-                    </form>
+                <div class="footer-column social-column">
+                    <h3 data-key="footer.followUs">تابعونا</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+            
+            <div class="contact-form">
+                <h3 data-key="contact.sendMessage">أرسل لنا رسالة</h3>
+                <form id="contactForm">
+                    <div class="name-fields">
+                        <!-- Reversed order for RTL languages -->
+                        <div class="form-group">
+                            <label for="familyName" data-key="contact.familyName">اسم العائلة *</label>
+                            <input type="text" id="familyName" name="familyName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="givenName" data-key="contact.givenName">الاسم الأول *</label>
+                            <input type="text" id="givenName" name="givenName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone" data-key="contact.phone">رقم الهاتف *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="idNumber" data-key="contact.idNumber">رقم الهوية *</label>
+                        <input type="text" id="idNumber" name="idNumber" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="area" data-key="contact.area">المنطقة *</label>
+                        <input type="text" id="area" name="area" required>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="message" data-key="contact.message">أرسل رسالة</label>
+                        <textarea id="message" name="message" rows="5" data-key="contact.messagePlaceholder" placeholder="أخبرنا عن وضعك..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-large" style="width: 100%;" data-key="contact.sendBtn">أرسل الرسالة</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
     <!-- CTA Section -->
     <section class="cta" id="cta">
         <div class="container">
