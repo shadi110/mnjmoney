@@ -297,61 +297,76 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Contact Form Submission
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
+		// Contact Form Submission
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
 
-            // Get form data
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const phone = document.getElementById('phone').value;
-            const idNumber = document.getElementById('idNumber').value;
-            const area = document.getElementById('area').value;
-            const message = document.getElementById('message').value;
+        // Safely get form data with null checks
+        const firstNameInput = document.getElementById('firstName');
+        const lastNameInput = document.getElementById('lastName');
+        const phoneInput = document.getElementById('phone');
+        const idNumberInput = document.getElementById('idNumber');
+        const areaInput = document.getElementById('area');
+        const messageInput = document.getElementById('message');
 
-            // Basic validation
-            if (!firstName || !lastName || !phone || !idNumber || !area) {
-                alert(getTranslation('form.requiredFields'));
-                return;
+        // Check if elements exist before accessing values
+        if (!firstNameInput || !lastNameInput || !phoneInput || !idNumberInput || !areaInput) {
+            console.error('Form elements not found');
+            alert('Form error: Please refresh the page and try again.');
+            return;
+        }
+
+        const firstName = firstNameInput.value;
+        const lastName = lastNameInput.value;
+        const phone = phoneInput.value;
+        const idNumber = idNumberInput.value;
+        const area = areaInput.value;
+        const message = messageInput ? messageInput.value : '';
+
+        // Basic validation
+        if (!firstName || !lastName || !phone || !idNumber || !area) {
+            alert(getTranslation('form.requiredFields') || 'Please fill in all required fields');
+            return;
+        }
+
+        // Show loading state
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = getTranslation('form.sending') || 'Sending...';
+        submitBtn.disabled = true;
+
+        try {
+            const response = await fetch('https://mnjmoney-be.onrender.com/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: `${firstName} ${lastName}`,
+                    email: `contact-${phone}@mnjmoney.com`,
+                    message: `Phone: ${phone}, ID: ${idNumber}, Area: ${area}, Message: ${message || 'No message provided'}`
+                })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(getTranslation('form.success') || 'Message sent successfully!');
+                contactForm.reset();
+            } else {
+                alert(result.detail || getTranslation('form.error') || 'Error sending message');
             }
-
-            // Show loading state
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = getTranslation('form.sending');
-            submitBtn.disabled = true;
-
-            try {
-                const response = await fetch('https://mnjmoney-be.onrender.com/api/contact', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        name: `${firstName} ${lastName}`,
-                        email: `contact-${phone}@mnjmoney.com`,
-                        message: `Phone: ${phone}, ID: ${idNumber}, Area: ${area}, Message: ${message || 'No message provided'}`
-                    })
-                });
-
-                const result = await response.json();
-
-                if (response.ok) {
-                    alert(getTranslation('form.success'));
-                    contactForm.reset();
-                } else {
-                    alert(result.detail || getTranslation('form.error'));
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert(getTranslation('form.networkError'));
-            } finally {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }
-        });
-    }
+        } catch (error) {
+            console.error('Error:', error);
+            alert(getTranslation('form.networkError') || 'Network error. Please try again.');
+        } finally {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+}
 
     // Survey Form Submission
     document.getElementById('submitSurvey').addEventListener('click', async function() {
