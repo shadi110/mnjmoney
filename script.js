@@ -179,6 +179,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeModal = document.getElementById('closeModal');
     const closeSurveyModal = document.getElementById('closeSurveyModal');
 
+    // Track if user has already completed a survey
+    let hasCompletedSurvey = localStorage.getItem('hasCompletedSurvey') === 'true';
+
     // Survey navigation variables
     const steps = document.querySelectorAll('.survey-step');
     const progressBar = document.getElementById('progressBar');
@@ -197,7 +200,14 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             surveyModal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
-            resetSurvey();
+            
+            if (hasCompletedSurvey) {
+                // Show thank you message directly
+                showThankYouMessage();
+            } else {
+                // Show normal survey steps
+                resetSurvey();
+            }
         });
     });
 
@@ -221,6 +231,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Reset form
         document.getElementById('surveyContactForm').reset();
+        
+        // Hide thank you message and show steps
+        document.getElementById('thankYouStep').style.display = 'none';
+        steps.forEach(step => {
+            step.style.display = 'block';
+        });
+        
+        // Show progress bar
+        document.querySelector('.survey-progress').style.display = 'flex';
+    }
+
+    function showThankYouMessage() {
+        // Hide all survey steps
+        steps.forEach(step => {
+            step.style.display = 'none';
+        });
+        
+        // Show thank you message
+        document.getElementById('thankYouStep').style.display = 'block';
+        
+        // Hide progress bar and indicators
+        document.querySelector('.survey-progress').style.display = 'none';
     }
 
     function updateSurveyProgress() {
@@ -380,16 +412,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     service_interest: document.querySelectorAll('#step4 .option-btn.selected')[0]?.dataset.value || '',
                     preferred_language: document.querySelectorAll('#step4 .option-btn.selected')[1]?.dataset.value || '',
 
-                    full_name: document.querySelector('#surveyContactForm input[name="full_name"]')?.value.trim() || '',
-					phone_number: document.querySelector('#surveyContactForm input[name="phone_number"]')?.value.trim() || '',
-					email_address: document.querySelector('#surveyContactForm input[name="email_address"]')?.value.trim() || ''
-
+                    // Contact Information
+                    full_name: document.querySelector('#surveyContactForm input[placeholder*="Name"]')?.value || '',
+                    phone_number: document.querySelector('#surveyContactForm input[placeholder*="Phone"]')?.value || '',
+                    email_address: document.querySelector('#surveyContactForm input[placeholder*="Email"]')?.value || ''
                 };
 
                 // Validate all fields are filled
                 const emptyFields = Object.entries(surveyData).filter(([key, value]) => !value.trim());
                 if (emptyFields.length > 0) {
-					console.log('Empty fields:', emptyFields.map(([key]) => key));
                     alert('Please fill in all fields before submitting.');
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
@@ -427,6 +458,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Show thank you step
                     document.getElementById('step4').style.display = 'none';
                     document.getElementById('thankYouStep').style.display = 'block';
+                    
+                    // Set completion flag
+                    hasCompletedSurvey = true;
+                    localStorage.setItem('hasCompletedSurvey', 'true');
                 } else {
                     throw new Error(result.detail || 'Failed to submit survey');
                 }
