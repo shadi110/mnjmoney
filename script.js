@@ -297,10 +297,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Contact Form Submission
+        // Contact Form Submission
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
         contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
+
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            
+            // Check if button is already disabled
+            if (submitBtn.disabled) {
+                return;
+            }
 
             // Get form data
             const firstName = document.getElementById('firstName').value;
@@ -316,8 +324,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Show loading state
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            // Show loading state and disable button
             const originalText = submitBtn.textContent;
             submitBtn.textContent = getTranslation('form.sending');
             submitBtn.disabled = true;
@@ -340,15 +347,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (response.ok) {
                     alert(getTranslation('form.success'));
                     contactForm.reset();
+                    
+                    // Keep button disabled for 30 seconds after successful submission
+                    setTimeout(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    }, 30000); // 30 seconds cooldown
+                    
                 } else {
                     alert(result.detail || getTranslation('form.error'));
+                    // Re-enable button after error
+                    setTimeout(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    }, 10000); // 10 seconds cooldown on error
                 }
             } catch (error) {
                 console.error('Error:', error);
                 alert(getTranslation('form.networkError'));
-            } finally {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
+                // Re-enable button after error
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                }, 10000); // 10 seconds cooldown on error
             }
         });
     }
