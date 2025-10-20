@@ -9,12 +9,13 @@
 }
 
 .login-form {
-    background: white;
+    background: #ebd19a;
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     width: 100%;
     max-width: 400px;
+    border: 2px solid rgba(0,0,0,0.1);
 }
 
 .login-form h2 {
@@ -926,44 +927,18 @@ header h1 {
 }
 
 
-/* Logo Styles for Login Page */
 .login-logo {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .logo-image {
-    height: 70px;
+    height: 80px; /* Bigger size */
     width: auto;
     transition: transform 0.3s ease;
-	filter: brightness(0) invert(1);
+    filter: brightness(0) invert(1); /* Makes logo white */
 }
 
 .logo-image:hover {
     transform: scale(1.05);
-}
-
-/* Responsive logo for mobile */
-@media (max-width: 768px) {
-    .login-logo {
-        top: 15px;
-        left: 15px;
-    }
-    
-    .logo-image {
-        height: 60px;
-    }
-}
-
-@media (max-width: 480px) {
-    .login-logo {
-        top: 10px;
-        left: 10px;
-    }
-    
-    .logo-image {
-        height: 50px;
-    }
 }
