@@ -123,7 +123,16 @@ body[lang="en"] {
 }
 
 [dir="rtl"] .survey-navigation {
-    flex-direction: var(--flex-direction);
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+[dir="ltr"] .survey-navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
 }
 
 [dir="rtl"] .faq-question {
