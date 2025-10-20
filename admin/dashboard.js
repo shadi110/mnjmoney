@@ -179,6 +179,7 @@ async function loadFinancialRequests(page = 1, search = '') {
     }
 }
 
+
 async function showContactRequests() {
     const container = document.getElementById('tablesContainer');
     if (!container) return;
@@ -186,17 +187,23 @@ async function showContactRequests() {
     // Hide dashboard cards
     document.querySelector('.dashboard-grid').style.display = 'none';
     
-    // Show skeleton loading
+    // Reset to first page when showing contacts
+    currentContactPage = 1;
+    contactSearchTerm = '';
+    
+    // Show loading state immediately
     container.innerHTML = `
         <button class="back-to-dashboard-btn" onclick="hideTables()">
             <i class="fas fa-arrow-left"></i> Back to Dashboard
         </button>
         <div style="margin-bottom: 30px;"></div>
-        <h2><div class="skeleton skeleton-title"></div></h2>
+        <h2>Contact Us Requests <span style="color: #666;">(Loading...)</span></h2>
         
         <div class="table-controls">
             <div class="search-box">
-                <div class="skeleton skeleton-search"></div>
+                <span class="search-icon"><i class="fas fa-search"></i></span>
+                <input type="text" id="contactSearch" placeholder="Search contacts..." disabled>
+                <button class="search-button" disabled>Search</button>
             </div>
         </div>
         
@@ -204,15 +211,22 @@ async function showContactRequests() {
             <table class="data-table">
                 <thead>
                     <tr>
-                        ${Array(7).fill().map(() => `<th><div class="skeleton skeleton-header"></div></th>`).join('')}
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>ID Number</th>
+                        <th>Area</th>
+                        <th>Date</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    ${Array(5).fill().map(() => `
-                        <tr>
-                            ${Array(7).fill().map(() => `<td><div class="skeleton skeleton-cell"></div></td>`).join('')}
-                        </tr>
-                    `).join('')}
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 40px;">
+                            <div class="loading-spinner" style="width: 30px; height: 30px; margin: 0 auto 15px;"></div>
+                            <p>Loading contact requests...</p>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -220,11 +234,90 @@ async function showContactRequests() {
     container.style.display = 'block';
     container.style.background = 'white';
     
-    // Load data
-    const result = await loadContactRequests(currentContactPage);
-    
-    // Replace with actual content (same as Option 1)
-    updateContactTable(result);
+    try {
+        // Load data
+        const result = await loadContactRequests(currentContactPage);
+        
+        // Update with actual data
+        container.innerHTML = `
+            <button class="back-to-dashboard-btn" onclick="hideTables()">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </button>
+            <div style="margin-bottom: 30px;"></div>
+            <h2>Contact Us Requests (${result.total})</h2>
+            
+            <div class="table-controls">
+                <div class="search-box">
+                    <span class="search-icon"><i class="fas fa-search"></i></span>
+                    <input type="text" id="contactSearch" placeholder="Search contacts..." onkeyup="handleContactSearch(event)" value="${contactSearchTerm}">
+                    <button class="search-button" onclick="handleContactSearch(event)">Search</button>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>ID Number</th>
+                            <th>Area</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${result.data.length > 0 ? result.data.map(request => `
+                            <tr>
+                                <td>${request.id}</td>
+                                <td>${escapeHtml(request.name)}</td>
+                                <td>${extractPhoneFromMessage(request.message) || 'N/A'}</td>
+                                <td>${extractIdNumberFromMessage(request.message) || 'N/A'}</td>
+                                <td>${extractAreaFromMessage(request.message) || 'N/A'}</td>
+                                <td>${formatDate(request.created_at)}</td>
+                                <td>
+                                    <button class="btn-small" onclick="viewContact(${request.id})">View</button>
+                                    <button class="btn-small btn-danger" onclick="deleteContact(${request.id})">Delete</button>
+                                </td>
+                            </tr>
+                        `).join('') : `
+                            <tr>
+                                <td colspan="7" style="text-align: center; padding: 20px;">No contact requests found</td>
+                            </tr>
+                        `}
+                    </tbody>
+                </table>
+            </div>
+            
+            ${result.total > 0 ? `
+            <div class="pagination">
+                <button onclick="changeContactPage(${currentContactPage - 1})" ${currentContactPage <= 1 ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                <span class="page-info">Page ${currentContactPage} of ${Math.ceil(result.total / rowsPerPage)}</span>
+                <button onclick="changeContactPage(${currentContactPage + 1})" ${!result.hasNext ? 'disabled' : ''}>
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            ` : ''}
+        `;
+    } catch (error) {
+        console.error('Error loading contact requests:', error);
+        // Show error state
+        container.innerHTML = `
+            <button class="back-to-dashboard-btn" onclick="hideTables()">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </button>
+            <div style="margin-bottom: 30px;"></div>
+            <h2>Contact Us Requests</h2>
+            <div style="text-align: center; padding: 40px; color: #dc3545;">
+                <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                <p>Failed to load contact requests. Please try again.</p>
+                <button class="btn" onclick="showContactRequests()">Retry</button>
+            </div>
+        `;
+    }
 }
 async function showFinancialRequests() {
     const container = document.getElementById('tablesContainer');
