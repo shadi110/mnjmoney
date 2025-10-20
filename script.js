@@ -198,13 +198,6 @@ document.addEventListener('DOMContentLoaded', function() {
             surveyModal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
             resetSurvey();
-            
-            // Always reset to step 1, never show thank you message again
-            document.getElementById('thankYouStep').style.display = 'none';
-            steps.forEach(step => {
-                step.style.display = 'block';
-            });
-            document.querySelector('.survey-progress').style.display = 'flex';
         });
     });
 
