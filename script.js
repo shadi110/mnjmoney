@@ -298,9 +298,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Contact Form Submission
     const contactForm = document.getElementById('contactForm');
+        // Contact Form Submission
+    const contactForm = document.getElementById('contactForm');
     if (contactForm) {
         contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
+
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            
+            // Check if button is already disabled
+            if (submitBtn.disabled) {
+                return;
+            }
 
             // Get form data
             const firstName = document.getElementById('firstName').value;
@@ -316,8 +325,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Show loading state
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            // Show loading state and disable button
             const originalText = submitBtn.textContent;
             submitBtn.textContent = getTranslation('form.sending');
             submitBtn.disabled = true;
@@ -340,26 +348,47 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (response.ok) {
                     alert(getTranslation('form.success'));
                     contactForm.reset();
+                    
+                    // Keep button disabled for 30 seconds after successful submission
+                    setTimeout(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    }, 30000); // 30 seconds cooldown
+                    
                 } else {
                     alert(result.detail || getTranslation('form.error'));
+                    // Re-enable button after error
+                    setTimeout(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    }, 10000); // 10 seconds cooldown on error
                 }
             } catch (error) {
                 console.error('Error:', error);
                 alert(getTranslation('form.networkError'));
-            } finally {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
+                // Re-enable button after error
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                }, 10000); // 10 seconds cooldown on error
             }
         });
     }
 
     // Survey Form Submission
+        // Survey Form Submission
     document.getElementById('submitSurvey').addEventListener('click', async function() {
+        const submitBtn = this;
+        
+        // Check if button is already disabled (cooldown period)
+        if (submitBtn.disabled) {
+            return;
+        }
+
         if (validateSurveyStep(4)) {
-            const submitBtn = this;
             const originalText = submitBtn.textContent;
 
-            // Show loading state
+            // Show loading state and disable button
             submitBtn.textContent = getTranslation('form.sending');
             submitBtn.disabled = true;
 
@@ -380,16 +409,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     service_interest: document.querySelectorAll('#step4 .option-btn.selected')[0]?.dataset.value || '',
                     preferred_language: document.querySelectorAll('#step4 .option-btn.selected')[1]?.dataset.value || '',
 
-                    full_name: document.querySelector('#surveyContactForm input[name="full_name"]')?.value.trim() || '',
-					phone_number: document.querySelector('#surveyContactForm input[name="phone_number"]')?.value.trim() || '',
-					email_address: document.querySelector('#surveyContactForm input[name="email_address"]')?.value.trim() || ''
-
+                    // Contact Information
+                    full_name: document.querySelector('#surveyContactForm input[placeholder*="Name"]')?.value || '',
+                    phone_number: document.querySelector('#surveyContactForm input[placeholder*="Phone"]')?.value || '',
+                    email_address: document.querySelector('#surveyContactForm input[placeholder*="Email"]')?.value || ''
                 };
 
                 // Validate all fields are filled
                 const emptyFields = Object.entries(surveyData).filter(([key, value]) => !value.trim());
                 if (emptyFields.length > 0) {
-					console.log('Empty fields:', emptyFields.map(([key]) => key));
                     alert('Please fill in all fields before submitting.');
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
@@ -427,12 +455,26 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Show thank you step
                     document.getElementById('step4').style.display = 'none';
                     document.getElementById('thankYouStep').style.display = 'block';
+                    
+                    // Keep button disabled for 30 seconds after successful submission
+                    setTimeout(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    }, 30000); // 30 seconds cooldown
+                    
                 } else {
                     throw new Error(result.detail || 'Failed to submit survey');
                 }
 
             } catch (error) {
                 console.error('Error submitting survey:', error);
+                
+                // Re-enable button after error (shorter cooldown - 10 seconds)
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                }, 10000); // 10 seconds cooldown on error
+                
                 if (error.message.includes('Failed to fetch')) {
                     alert('Network error: Cannot connect to server. Please check your internet connection.');
                 } else if (error.message.includes('503')) {
@@ -440,8 +482,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     alert(`Error: ${error.message}`);
                 }
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
             }
         }
     });
