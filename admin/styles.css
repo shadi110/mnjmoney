@@ -279,11 +279,15 @@ header h1 {
     position: absolute;
     top: 20px;
     right: 20px;
-    background: #b8860b;
+    background:  #daa851 !important;
     color: white;
     padding: 5px 10px;
     border-radius: 20px;
     font-size: 0.8em;
+}
+
+.count-badge.loading {
+    background: #b8860b !important; /* Darker gold for loading state */
 }
 
 .tables-container {
@@ -961,9 +965,6 @@ header h1 {
     80%, 100% { content: ''; }
 }
 
-.count-badge.loading {
-    background: #6c757d !important;
-}
 
 .count-badge {
     position: absolute;
