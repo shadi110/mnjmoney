@@ -341,8 +341,9 @@ async function changeContactPage(page) {
             <tr>
                 <td>${request.id}</td>
                 <td>${escapeHtml(request.name)}</td>
-                <td>${escapeHtml(request.email)}</td>
-                <td class="message-cell">${escapeHtml(request.message)}</td>
+                <td>${extractPhoneFromMessage(request.message) || 'N/A'}</td>
+                <td>${extractIdNumberFromMessage(request.message) || 'N/A'}</td>
+                <td>${extractAreaFromMessage(request.message) || 'N/A'}</td>
                 <td>${formatDate(request.created_at)}</td>
                 <td>
                     <button class="btn-small" onclick="viewContact(${request.id})">View</button>
@@ -351,7 +352,7 @@ async function changeContactPage(page) {
             </tr>
         `).join('') : `
             <tr>
-                <td colspan="6" style="text-align: center; padding: 20px;">No contact requests found</td>
+                <td colspan="7" style="text-align: center; padding: 20px;">No contact requests found</td>
             </tr>
         `;
     }
