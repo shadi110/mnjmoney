@@ -388,12 +388,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Validate all fields are filled
                 const emptyFields = Object.entries(surveyData).filter(([key, value]) => !value.trim());
-                if (emptyFields.length > 0) {
+                /*if (emptyFields.length > 0) {
                     alert('Please fill in all fields before submitting.');
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
                     return;
-                }
+                }*/
 
                 console.log('Submitting financial request:', surveyData);
 
