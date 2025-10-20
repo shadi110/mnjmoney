@@ -1462,12 +1462,32 @@ footer {
 }
 
 
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+}
 .services-grid .service-card:nth-child(4) {
     grid-column: 1 / 4; /* This makes it span all 3 columns */
 	justify-self: center;
     max-width: 70%; /* Ensures it takes full width */
     
 }
+
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: 1fr; /* Single column on mobile */
+        gap: 20px;
+    }
+    
+    .services-grid .service-card:nth-child(4) {
+        grid-column: 1; /* Reset to single column on mobile */
+        max-width: 100%; /* Full width on mobile */
+    }
+}
+
 
 .service-card {
     background: white;
