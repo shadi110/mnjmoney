@@ -16,20 +16,23 @@
         
         <div class="dashboard-grid">
             <!-- Contact Us Requests Block -->
-            <div class="dashboard-card" onclick="showContactRequests()">
-                <div class="card-icon"><i class="fas fa-envelope"></i></div>
-                <h3>Contact Us Requests</h3>
-                <div class="count-badge" id="contactCount">0</div>
-                <p>View all contact form submissions</p>
-            </div>
+           <div class="dashboard-card" onclick="showContactRequests()">
+    <div class="card-icon"><i class="fas fa-envelope"></i></div>
+    <h3>Contact Us Requests</h3>
+    <div class="count-badge" id="contactCount">
+        <div class="loading-dots">Loading</div>
+    </div>
+    <p>View all contact form submissions</p>
+</div>
 
-            <!-- Financial Requests Block -->
-            <div class="dashboard-card" onclick="showFinancialRequests()">
-                <div class="card-icon"><i class="fas fa-money-bill-wave"></i></div>
-                <h3>Financial Requests</h3>
-                <div class="count-badge" id="financialCount">0</div>
-                <p>View all financial service requests</p>
-            </div>
+<div class="dashboard-card" onclick="showFinancialRequests()">
+    <div class="card-icon"><i class="fas fa-money-bill-wave"></i></div>
+    <h3>Financial Requests</h3>
+    <div class="count-badge" id="financialCount">
+        <div class="loading-dots">Loading</div>
+    </div>
+    <p>View all financial service requests</p>
+</div>
         </div>
 
         <!-- Tables Container -->
