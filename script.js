@@ -380,10 +380,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     service_interest: document.querySelectorAll('#step4 .option-btn.selected')[0]?.dataset.value || '',
                     preferred_language: document.querySelectorAll('#step4 .option-btn.selected')[1]?.dataset.value || '',
 
-                    // Contact Information
-                    full_name: document.querySelector('#surveyContactForm input[placeholder*="Name"]')?.value || '',
-                    phone_number: document.querySelector('#surveyContactForm input[placeholder*="Phone"]')?.value || '',
-                    email_address: document.querySelector('#surveyContactForm input[placeholder*="Email"]')?.value || ''
+                    full_name: document.querySelector('#surveyContactForm input[name="full_name"]')?.value.trim() || '',
+					phone_number: document.querySelector('#surveyContactForm input[name="phone_number"]')?.value.trim() || '',
+					email_address: document.querySelector('#surveyContactForm input[name="email_address"]')?.value.trim() || ''
+
                 };
 
                 // Validate all fields are filled
