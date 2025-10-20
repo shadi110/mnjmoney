@@ -68,6 +68,19 @@ const API_BASE_URL = 'https://mnjmoney-be.onrender.com';
 
 async function updateCounts() {
     try {
+        // Show loading state
+        const contactCount = document.getElementById('contactCount');
+        const financialCount = document.getElementById('financialCount');
+        
+        if (contactCount) {
+            contactCount.innerHTML = '<div class="loading-dots">Loading</div>';
+            contactCount.classList.add('loading');
+        }
+        if (financialCount) {
+            financialCount.innerHTML = '<div class="loading-dots">Loading</div>';
+            financialCount.classList.add('loading');
+        }
+        
         // Load contact requests count
         const contactsResponse = await fetch(`${API_BASE_URL}/api/contacts?limit=1`);
         const financialResponse = await fetch(`${API_BASE_URL}/api/financial-requests?limit=1`);
@@ -79,20 +92,33 @@ async function updateCounts() {
         const contactsResult = await contactsResponse.json();
         const financialResult = await financialResponse.json();
         
-        const contactCount = document.getElementById('contactCount');
-        const financialCount = document.getElementById('financialCount');
-        
+        // Update counts with actual data
         if (contactCount && contactsResult.success) {
             contactCount.textContent = contactsResult.total || 0;
+            contactCount.classList.remove('loading');
         }
         if (financialCount && financialResult.success) {
             financialCount.textContent = financialResult.total || 0;
+            financialCount.classList.remove('loading');
         }
+        
     } catch (error) {
         console.error('Error updating counts:', error);
+        
+        // Show error state
+        const contactCount = document.getElementById('contactCount');
+        const financialCount = document.getElementById('financialCount');
+        
+        if (contactCount) {
+            contactCount.textContent = '0';
+            contactCount.classList.remove('loading');
+        }
+        if (financialCount) {
+            financialCount.textContent = '0';
+            financialCount.classList.remove('loading');
+        }
     }
 }
-
 async function loadContactRequests(page = 1, search = '') {
     try {
         let url = `${API_BASE_URL}/api/contacts?limit=${rowsPerPage}&offset=${(page - 1) * rowsPerPage}`;
