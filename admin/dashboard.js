@@ -326,24 +326,19 @@ async function showFinancialRequests() {
     // Hide dashboard cards
     document.querySelector('.dashboard-grid').style.display = 'none';
     
-    // Reset to first page when showing financial requests
-    currentFinancialPage = 1;
-    financialSearchTerm = '';
-    
-    const result = await loadFinancialRequests(currentFinancialPage);
-    
+    // Show loading state immediately
     container.innerHTML = `
         <button class="back-to-dashboard-btn" onclick="hideTables()">
-			<i class="fas fa-arrow-left"></i> Back to Dashboard
-		</button>
-		<div style="margin-bottom: 30px;"></div> <!-- Added space -->
-		<h2>Contact Us Requests (${result.total})</h2>
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </button>
+        <div style="margin-bottom: 30px;"></div>
+        <h2>Financial Requests <span style="color: #666;">(Loading...)</span></h2>
         
         <div class="table-controls">
             <div class="search-box">
                 <span class="search-icon"><i class="fas fa-search"></i></span>
-                <input type="text" id="financialSearch" placeholder="Search financial requests..." onkeyup="handleFinancialSearch(event)" value="${financialSearchTerm}">
-                <button class="search-button" onclick="handleFinancialSearch(event)">Search</button>
+                <input type="text" id="financialSearch" placeholder="Search financial requests..." disabled>
+                <button class="search-button" disabled>Search</button>
             </div>
         </div>
         
@@ -363,46 +358,111 @@ async function showFinancialRequests() {
                     </tr>
                 </thead>
                 <tbody>
-                    ${result.data.length > 0 ? result.data.map(request => `
-                        <tr>
-                            <td>${request.id}</td>
-                            <td>${escapeHtml(request.full_name)}</td>
-                            <td>${escapeHtml(request.phone_number)}</td>
-                            <td>${escapeHtml(request.email_address)}</td>
-                            <td>${formatEmployment(request.employment_status, request.employment_type)}</td>
-                            <td>${formatServiceType(request.service_interest)}</td>
-                            <td>${formatLanguage(request.preferred_language)}</td>
-                            <td>${formatDate(request.created_at)}</td>
-                            <td>
-                                <button class="btn-small" onclick="viewFinancialRequest(${request.id})">View</button>
-                                <button class="btn-small btn-danger" onclick="deleteFinancialRequest(${request.id})">Delete</button>
-                            </td>
-                        </tr>
-                    `).join('') : `
-                        <tr>
-                            <td colspan="9" style="text-align: center; padding: 20px;">No financial requests found</td>
-                        </tr>
-                    `}
+                    <tr>
+                        <td colspan="9" style="text-align: center; padding: 40px;">
+                            <div class="loading-spinner" style="width: 30px; height: 30px; margin: 0 auto 15px;"></div>
+                            <p>Loading financial requests...</p>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
-        
-        ${result.total > 0 ? `
-        <div class="pagination">
-            <button onclick="changeFinancialPage(${currentFinancialPage - 1})" ${currentFinancialPage <= 1 ? 'disabled' : ''}>
-                <i class="fas fa-chevron-left"></i> Previous
-            </button>
-            <span class="page-info">Page ${currentFinancialPage} of ${Math.ceil(result.total / rowsPerPage)}</span>
-            <button onclick="changeFinancialPage(${currentFinancialPage + 1})" ${!result.hasNext ? 'disabled' : ''}>
-                Next <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
-        ` : ''}
     `;
     container.style.display = 'block';
-	container.style.background = 'white';
+    container.style.background = 'white';
+    
+    try {
+        // Reset to first page when showing financial requests
+        currentFinancialPage = 1;
+        financialSearchTerm = '';
+        
+        const result = await loadFinancialRequests(currentFinancialPage);
+        
+        // Update with actual data
+        container.innerHTML = `
+            <button class="back-to-dashboard-btn" onclick="hideTables()">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </button>
+            <div style="margin-bottom: 30px;"></div>
+            <h2>Financial Requests (${result.total})</h2>
+            
+            <div class="table-controls">
+                <div class="search-box">
+                    <span class="search-icon"><i class="fas fa-search"></i></span>
+                    <input type="text" id="financialSearch" placeholder="Search financial requests..." onkeyup="handleFinancialSearch(event)" value="${financialSearchTerm}">
+                    <button class="search-button" onclick="handleFinancialSearch(event)">Search</button>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Employment</th>
+                            <th>Service</th>
+                            <th>Language</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${result.data.length > 0 ? result.data.map(request => `
+                            <tr>
+                                <td>${request.id}</td>
+                                <td>${escapeHtml(request.full_name)}</td>
+                                <td>${escapeHtml(request.phone_number)}</td>
+                                <td>${escapeHtml(request.email_address)}</td>
+                                <td>${formatEmployment(request.employment_status, request.employment_type)}</td>
+                                <td>${formatServiceType(request.service_interest)}</td>
+                                <td>${formatLanguage(request.preferred_language)}</td>
+                                <td>${formatDate(request.created_at)}</td>
+                                <td>
+                                    <button class="btn-small" onclick="viewFinancialRequest(${request.id})">View</button>
+                                    <button class="btn-small btn-danger" onclick="deleteFinancialRequest(${request.id})">Delete</button>
+                                </td>
+                            </tr>
+                        `).join('') : `
+                            <tr>
+                                <td colspan="9" style="text-align: center; padding: 20px;">No financial requests found</td>
+                            </tr>
+                        `}
+                    </tbody>
+                </table>
+            </div>
+            
+            ${result.total > 0 ? `
+            <div class="pagination">
+                <button onclick="changeFinancialPage(${currentFinancialPage - 1})" ${currentFinancialPage <= 1 ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                <span class="page-info">Page ${currentFinancialPage} of ${Math.ceil(result.total / rowsPerPage)}</span>
+                <button onclick="changeFinancialPage(${currentFinancialPage + 1})" ${!result.hasNext ? 'disabled' : ''}>
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            ` : ''}
+        `;
+    } catch (error) {
+        console.error('Error loading financial requests:', error);
+        // Show error state
+        container.innerHTML = `
+            <button class="back-to-dashboard-btn" onclick="hideTables()">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </button>
+            <div style="margin-bottom: 30px;"></div>
+            <h2>Financial Requests</h2>
+            <div style="text-align: center; padding: 40px; color: #dc3545;">
+                <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                <p>Failed to load financial requests. Please try again.</p>
+                <button class="btn" onclick="showFinancialRequests()">Retry</button>
+            </div>
+        `;
+    }
 }
-
 async function changeContactPage(page) {
     if (page < 1) return;
     
